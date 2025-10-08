@@ -20,9 +20,10 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets OpenGL Network)
 # Executable
 # ------------------------------
 add_executable(${PROJECT_NAME}
-    main.cpp
-    MainWindow.cpp
-    MainWindow.h
+
+    src/frontend/MainWindow.cpp
+    src/frontend/MainWindow.h
+    src/backend/main.cpp
     # ajoute ici tous tes fichiers
 )
 
