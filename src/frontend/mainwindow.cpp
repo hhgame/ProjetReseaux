@@ -1,14 +1,29 @@
 #include "mainwindow.h"
-#include "./ui_mainwindow.h"
+#include <QVBoxLayout>
+#include <QPixmap>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+    // Créer un widget central
+    QWidget* central = new QWidget(this);
+    setCentralWidget(central);
+
+    // Layout vertical
+    QVBoxLayout* layout = new QVBoxLayout(central);
+
+    // Créer le widget OSM
+    mapWidget = new MapWidgetOSM(this);
+
+    // Définir le centre sur Mulhouse et zoom initial
+    mapWidget->setCentre(47.75, 7.34);
+    mapWidget->setZoom(13);
+
+    // Ajouter le widget OSM au layout
+    layout->addWidget(mapWidget);
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
 }
