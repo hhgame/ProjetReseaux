@@ -22,6 +22,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Ajouter le widget OSM au layout
     layout->addWidget(mapWidget);
+
+    resize(800, 600);
+    show();
 }
 
 MainWindow::~MainWindow()

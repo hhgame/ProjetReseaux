@@ -2,6 +2,7 @@
 #include <QPainter>
 #include <QtMath>
 #include <QUrl>
+#include <QDebug>
 
 Tuile::Tuile() :
     x{0}, y{0}, z{0}
@@ -92,36 +93,29 @@ QPixmap Overlay::getPixmap() const
 
 
 MapWidgetOSM::MapWidgetOSM(QWidget* parent)
-    : QWidget{parent},
+    : QWidget(parent),
     networkManager(new QNetworkAccessManager(this)),
-    // Centre Mulhouse approx
     centerLat(47.75),
     centerLon(7.34),
     zoomLevel(12),
     tileSize(256)
 {
-    // Connexion du slot de téléchargement des tuiles
     connect(networkManager, &QNetworkAccessManager::finished,
             this, &MapWidgetOSM::tileDownloaded);
+    loadTiles();
 }
 
 void MapWidgetOSM::setCentre(double lat, double lon)
 {
     centerLat = lat;
     centerLon = lon;
-    // Limiter la zone
     constrainCenter();
-
-    // Recharger les tuiles
     loadTiles();
-
-    // Rafraîchir l'affichage
     update();
 }
 
 void MapWidgetOSM::setZoom(int zoom)
 {
-    // Limite de zoom
     zoomLevel = qBound(12, zoom, 16);
     loadTiles();
     update();
@@ -158,55 +152,73 @@ QString MapWidgetOSM::tileKey(int x, int y, int z) const
 
 void MapWidgetOSM::constrainCenter()
 {
-    // Limiter la carte au bassin mulhousien
-    double minLat = 47.6, maxLat = 48.0;
-    double minLon = 7.1, maxLon = 7.6;
-    centerLat = qBound(minLat, centerLat, maxLat);
-    centerLon = qBound(minLon, centerLon, maxLon);
+    centerLat = qBound(47.6, centerLat, 48.0);
+    centerLon = qBound(7.1, centerLon, 7.6);
 }
 
 void MapWidgetOSM::loadTiles()
 {
-    tiles.clear();
     QPointF centerTile = latLonToTileXY(centerLat, centerLon, zoomLevel);
     int cx = static_cast<int>(centerTile.x());
     int cy = static_cast<int>(centerTile.y());
 
-    /** Charger une grille 3x3 autour du centre */
-    for (int dx = -1; dx <= 1; ++dx) {
-        for (int dy = -1; dy <= 1; ++dy) {
+    int range = 1; // 3x3 tuiles
+    for (int dx = -range; dx <= range; ++dx) {
+        for (int dy = -range; dy <= range; ++dy) {
             int x = cx + dx;
             int y = cy + dy;
             QString key = tileKey(x, y, zoomLevel);
+
             if (!tiles.contains(key)) {
-                QUrl url(QString("https://tile.openstreetmap.org/%1/%2/%3.png")
+                QUrl url(QString("https://a.tile.openstreetmap.fr/osmfr/%1/%2/%3.png")
                              .arg(zoomLevel).arg(x).arg(y));
-                networkManager->get(QNetworkRequest(url));
+                qDebug() << "Téléchargement tuile:" << url.toString();
+
+                QNetworkRequest req(url);
+                req.setRawHeader("User-Agent", "MapWidgetOSMQt/1.0 (hugoh@example.com)");
+
+                networkManager->get(req);
                 tiles.insert(key, {x, y, zoomLevel, QPixmap()});
             }
         }
     }
 }
 
-void MapWidgetOSM::tileDownloaded()
+void MapWidgetOSM::tileDownloaded(QNetworkReply* reply)
 {
-    /** Récupération de la tuile téléchargée */
-    QNetworkReply* reply = qobject_cast<QNetworkReply*>(sender());
     if (!reply) return;
+
+    if (reply->error() != QNetworkReply::NoError) {
+        qDebug() << "Erreur téléchargement:" << reply->errorString()
+            << "URL:" << reply->url().toString();
+        reply->deleteLater();
+        return;
+    }
 
     QByteArray data = reply->readAll();
     QPixmap pix;
-    pix.loadFromData(data);
+    if (!pix.loadFromData(data)) {
+        qDebug() << "⚠️ Échec chargement image depuis:" << reply->url().toString();
+    }
 
-    /** Extraire x/y/z depuis l'URL de la tuile */
-    QUrl url = reply->url();
-    QStringList parts = url.path().split("/");
-    if (parts.size() >= 4) {
-        int z = parts[1].toInt();
-        int x = parts[2].toInt();
-        int y = parts[3].split(".").first().toInt();
+    // Split en ignorant les segments vides (évite le premier "")
+    QStringList parts = reply->url().path().split("/", Qt::SkipEmptyParts);
+    // On attend les 3 derniers éléments : prefix (osmfr), z, x, y.png  -> on prend les derniers 3
+    if (parts.size() >= 3) {
+        // indexation : ... , z, x, y.png  -> z = parts[parts.size()-3]
+        int idx = parts.size();
+        int z = parts[idx - 3].toInt();
+        int x = parts[idx - 2].toInt();
+        int y = parts[idx - 1].split(".").first().toInt();
         QString key = tileKey(x, y, z);
-        if (tiles.contains(key)) tiles[key].getPixmap() = pix;
+        qDebug() << "Tuile reçue:" << z << x << y << "-> key =" << key << "pix null?" << pix.isNull();
+        if (tiles.contains(key)) {
+            tiles[key].setPixmap(pix);
+        } else {
+            qDebug() << "Warning: clé de tuile introuvable pour" << key;
+        }
+    } else {
+        qDebug() << "URL tile malformed:" << reply->url().toString();
     }
 
     reply->deleteLater();
@@ -218,25 +230,57 @@ void MapWidgetOSM::paintEvent(QPaintEvent*)
     QPainter painter(this);
     painter.fillRect(rect(), Qt::white);
 
-    QPointF centerTile = latLonToTileXY(centerLat, centerLon, zoomLevel);
-    int cx = static_cast<int>(centerTile.x());
-    int cy = static_cast<int>(centerTile.y());
-    double fx = centerTile.x() - cx;
-    double fy = centerTile.y() - cy;
-    int offsetX = width()/2 - tileSize*fx;
-    int offsetY = height()/2 - tileSize*fy;
+    // 1. Coordonnées flottantes de la tuile correspondant au centre de la carte
+    QPointF centerTileFloat = latLonToTileXY(centerLat, centerLon, zoomLevel);
 
-    /** Dessiner les tuiles */
-    for (auto tile : tiles) {
-        if (!tile.getPixmap().isNull()) {
-            int dx = (tile.getX() - cx) * tileSize + offsetX;
-            int dy = (tile.getY() - cy) * tileSize + offsetY;
-            painter.drawPixmap(dx, dy, tileSize, tileSize, tile.getPixmap());
+    // 2. Coordonnées flottantes de la tuile correspondant au coin supérieur gauche du widget
+    // C'est le centre de la carte (en tuile flottante) moins la moitié de la taille du widget (en tuile)
+    double widgetTopLeftTileX = centerTileFloat.x() - (width() / 2.0) / tileSize;
+    double widgetTopLeftTileY = centerTileFloat.y() - (height() / 2.0) / tileSize;
+
+    // 3. Coordonnées entières de la première tuile visible (coin supérieur gauche)
+    int startTileX = qFloor(widgetTopLeftTileX);
+    int startTileY = qFloor(widgetTopLeftTileY);
+
+    // 4. Position en pixels du coin supérieur gauche de la tuile (startTileX, startTileY) sur le widget.
+    // L'offset est la partie fractionnelle de la tuile visible (startTile - widgetTopLeft) * tileSize
+    double startPixelX = (startTileX - widgetTopLeftTileX) * tileSize;
+    double startPixelY = (startTileY - widgetTopLeftTileY) * tileSize;
+
+    // Dessin des tuiles
+    int currentX = startTileX;
+    while (true) {
+        // Calcul de la position X de la tuile courante (en ajoutant des décalages entiers de tileSize)
+        double currentPixelX = startPixelX + (currentX - startTileX) * tileSize;
+        if (currentPixelX >= width()) break;
+
+        int currentY = startTileY;
+        while (true) {
+            double currentPixelY = startPixelY + (currentY - startTileY) * tileSize;
+            if (currentPixelY >= height()) break;
+
+            QString key = tileKey(currentX, currentY, zoomLevel);
+            if (tiles.contains(key)) {
+                const Tuile& tile = tiles.value(key);
+                if (!tile.getPixmap().isNull()) {
+                    // Dessiner la tuile
+                    painter.drawPixmap(static_cast<int>(currentPixelX),
+                                       static_cast<int>(currentPixelY),
+                                       tileSize, tileSize, tile.getPixmap());
+                } else {
+                    // Optionnel : Dessiner une tuile vide/grise ou un indicateur de chargement
+                    painter.fillRect(static_cast<int>(currentPixelX),
+                                     static_cast<int>(currentPixelY),
+                                     tileSize, tileSize, Qt::lightGray);
+                }
+            }
+            currentY++;
         }
+        currentX++;
     }
 
-    /** Dessiner les overlays par-dessus */
-    for (auto ov : overlays) {
+    // Dessin des Overlays
+    for (auto& ov : overlays) {
         QPointF pos = latLonToPixel(ov.getLat(), ov.getLon());
         painter.drawPixmap(pos.x() - ov.getPixmap().width()/2,
                            pos.y() - ov.getPixmap().height()/2,
@@ -244,22 +288,20 @@ void MapWidgetOSM::paintEvent(QPaintEvent*)
     }
 }
 
+
 void MapWidgetOSM::wheelEvent(QWheelEvent* event)
 {
-    /** Zoomer ou dézoomer avec la molette */
     int delta = event->angleDelta().y();
     setZoom(zoomLevel + (delta>0 ? 1 : -1));
 }
 
 void MapWidgetOSM::mousePressEvent(QMouseEvent* event)
 {
-    /** Début du pan */
     lastMousePos = event->pos();
 }
 
 void MapWidgetOSM::mouseMoveEvent(QMouseEvent* event)
 {
-    /** Déplacement de la carte si clic gauche maintenu */
     if (event->buttons() & Qt::LeftButton) {
         QPoint delta = event->pos() - lastMousePos;
         double factor = 1.0 / (tileSize * qPow(2, zoomLevel));
@@ -271,4 +313,3 @@ void MapWidgetOSM::mouseMoveEvent(QMouseEvent* event)
         update();
     }
 }
-
