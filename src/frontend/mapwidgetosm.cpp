@@ -3,6 +3,7 @@
 #include <QtMath>
 #include <QUrl>
 #include <QDebug>
+#include <QPushButton>
 
 Tuile::Tuile() :
     x{0}, y{0}, z{0}
@@ -97,12 +98,34 @@ MapWidgetOSM::MapWidgetOSM(QWidget* parent)
     networkManager(new QNetworkAccessManager(this)),
     centerLat(47.75),
     centerLon(7.34),
-    zoomLevel(12),
+    zoomLevel(MIN_ZOOM),
     tileSize(256)
 {
     connect(networkManager, &QNetworkAccessManager::finished,
             this, &MapWidgetOSM::tileDownloaded);
     loadTiles();
+
+    zoomInBtn = new QPushButton("+", this);
+    zoomOutBtn = new QPushButton("-", this);
+
+    int btnSize = 36;
+    zoomInBtn->setFixedSize(btnSize, btnSize);
+    zoomOutBtn->setFixedSize(btnSize, btnSize);
+
+    zoomInBtn->setStyleSheet(
+        "QPushButton { background: rgba(255,255,255,180); border: 1px solid gray; "
+        "border-radius: 6px; font-size: 20px; font-weight: bold; }"
+        "QPushButton:hover { background: white; }"
+        );
+    zoomOutBtn->setStyleSheet(zoomInBtn->styleSheet());
+
+    connect(zoomInBtn, &QPushButton::clicked, [this]() {
+        setZoom(zoomLevel + 1);
+    });
+    connect(zoomOutBtn, &QPushButton::clicked, [this]() {
+        setZoom(zoomLevel - 1);
+    });
+
 }
 
 void MapWidgetOSM::setCentre(double lat, double lon)
@@ -116,10 +139,19 @@ void MapWidgetOSM::setCentre(double lat, double lon)
 
 void MapWidgetOSM::setZoom(int zoom)
 {
-    zoomLevel = qBound(12, zoom, 16);
+    const int minZoom = MIN_ZOOM;
+    const int maxZoom = MAX_ZOOM;
+    int newZoom = qBound(minZoom, zoom, maxZoom);
+
+    // Si le zoom n'a pas changé, on ne recharge pas
+    if (newZoom == zoomLevel)
+        return;
+
+    zoomLevel = newZoom;
     loadTiles();
     update();
 }
+
 
 void MapWidgetOSM::addOverlay(const QPixmap& pix, double lat, double lon)
 {
@@ -152,8 +184,8 @@ QString MapWidgetOSM::tileKey(int x, int y, int z) const
 
 void MapWidgetOSM::constrainCenter()
 {
-    centerLat = qBound(47.6, centerLat, 48.0);
-    centerLon = qBound(7.1, centerLon, 7.6);
+    centerLat = qBound(MIN_LAT, centerLat, MAX_LAT);
+    centerLon = qBound(MIN_LON, centerLon, MAX_LON);
 }
 
 void MapWidgetOSM::loadTiles()
@@ -175,7 +207,7 @@ void MapWidgetOSM::loadTiles()
                 qDebug() << "Téléchargement tuile:" << url.toString();
 
                 QNetworkRequest req(url);
-                req.setRawHeader("User-Agent", "MapWidgetOSMQt/1.0 (hugoh@example.com)");
+                req.setRawHeader("User-Agent", "MapWidgetOSMQt/1.0 (projetReseaux)");
 
                 networkManager->get(req);
                 tiles.insert(key, {x, y, zoomLevel, QPixmap()});
@@ -201,11 +233,8 @@ void MapWidgetOSM::tileDownloaded(QNetworkReply* reply)
         qDebug() << "⚠️ Échec chargement image depuis:" << reply->url().toString();
     }
 
-    // Split en ignorant les segments vides (évite le premier "")
     QStringList parts = reply->url().path().split("/", Qt::SkipEmptyParts);
-    // On attend les 3 derniers éléments : prefix (osmfr), z, x, y.png  -> on prend les derniers 3
     if (parts.size() >= 3) {
-        // indexation : ... , z, x, y.png  -> z = parts[parts.size()-3]
         int idx = parts.size();
         int z = parts[idx - 3].toInt();
         int x = parts[idx - 2].toInt();
@@ -243,7 +272,7 @@ void MapWidgetOSM::paintEvent(QPaintEvent*)
     int startTileY = qFloor(widgetTopLeftTileY);
 
     // 4. Position en pixels du coin supérieur gauche de la tuile (startTileX, startTileY) sur le widget.
-    // L'offset est la partie fractionnelle de la tuile visible (startTile - widgetTopLeft) * tileSize
+    // L'offset est la partie fractionnelle de la tuile visible
     double startPixelX = (startTileX - widgetTopLeftTileX) * tileSize;
     double startPixelY = (startTileY - widgetTopLeftTileY) * tileSize;
 
@@ -288,12 +317,53 @@ void MapWidgetOSM::paintEvent(QPaintEvent*)
     }
 }
 
+QPointF MapWidgetOSM::latLonFromPixel(const QPointF& pixel)
+{
+    QPointF centerTile = latLonToTileXY(centerLat, centerLon, zoomLevel);
+    double tileX = centerTile.x() + (pixel.x() - width()/2.0) / tileSize;
+    double tileY = centerTile.y() + (pixel.y() - height()/2.0) / tileSize;
+
+    double n = qPow(2.0, zoomLevel);
+    double lon = tileX / n * 360.0 - 180.0;
+    double latRad = qAtan(sinh(M_PI * (1 - 2 * tileY / n)));
+    double lat = qRadiansToDegrees(latRad);
+
+    return QPointF(lon, lat);
+}
+
+
 
 void MapWidgetOSM::wheelEvent(QWheelEvent* event)
 {
-    int delta = event->angleDelta().y();
-    setZoom(zoomLevel + (delta>0 ? 1 : -1));
+    int step = (event->angleDelta().y() > 0) ? 1 : -1;
+
+    int newZoom = zoomLevel + step;
+
+    const int minZoom = 12;
+    const int maxZoom = 18;
+
+    newZoom = qBound(minZoom, newZoom, maxZoom);
+
+    if (newZoom == zoomLevel)
+        return;
+
+    QPointF mousePos = event->position();
+    QPointF before = latLonFromPixel(mousePos);
+
+    zoomLevel = newZoom;
+    loadTiles();
+
+    QPointF after = latLonFromPixel(mousePos);
+
+    centerLat += (before.y() - after.y());
+    centerLon += (before.x() - after.x());
+    constrainCenter();
+
+
+    update();
 }
+
+
 
 void MapWidgetOSM::mousePressEvent(QMouseEvent* event)
 {
@@ -305,11 +375,24 @@ void MapWidgetOSM::mouseMoveEvent(QMouseEvent* event)
     if (event->buttons() & Qt::LeftButton) {
         QPoint delta = event->pos() - lastMousePos;
         double factor = 1.0 / (tileSize * qPow(2, zoomLevel));
-        centerLat -= delta.y() * factor * 360.0 / M_PI;
+
+        centerLat += delta.y() * factor * 360.0 / M_PI;
         centerLon -= delta.x() * factor * 360.0 / M_PI;
+
         constrainCenter();
         lastMousePos = event->pos();
         loadTiles();
         update();
     }
+}
+
+
+void MapWidgetOSM::resizeEvent(QResizeEvent*)
+{
+    int margin = 10;
+    int spacing = 5;
+    int btnSize = zoomInBtn->height();
+
+    zoomInBtn->move(width() - btnSize - margin, margin);
+    zoomOutBtn->move(width() - btnSize - margin, margin + btnSize + spacing);
 }

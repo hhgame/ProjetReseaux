@@ -9,6 +9,20 @@
 #include <QPixmap>
 #include <QWheelEvent>
 #include <QMouseEvent>
+#include <QPushButton>
+
+// Bassin de Mulhouse approximatif
+const double MIN_LAT = 47.66;
+const double MAX_LAT = 47.84;
+const double MIN_LON = 7.207;
+const double MAX_LON = 7.473;
+
+// Limite des zooms
+const int MIN_ZOOM = 12;
+const int MAX_ZOOM = 18;
+
+
+
 
 /**
  * Définit une tuile
@@ -123,6 +137,12 @@ protected:
      */
     void mouseMoveEvent(QMouseEvent* event) override;
 
+    /**
+     * Evenement sur zoom et dezoom de la carte pour
+     * garantir la place des bouton de zoom et dezoom
+     */
+    void resizeEvent(QResizeEvent*) override;
+
 private slots:
     /**
      * Slot appelé lorsque le téléchargement d'une tuile est terminé
@@ -140,6 +160,12 @@ private:
 
     /** Liste des overlays */
     QList<Overlay> overlays;
+
+    /** Bouton zoom */
+    QPushButton* zoomInBtn;
+
+    /** Bouton dezoom */
+    QPushButton* zoomOutBtn;
 
     /** Latitude du centre */
     double centerLat;
@@ -177,6 +203,13 @@ private:
      * @return Position pixel (x,y)
      */
     QPointF latLonToPixel(double lat, double lon);
+
+    /**
+     * Calcule la latitude et la longitude correspondantes sur la carte.
+     * @param pixel le point sur la carte
+     * @return les coordonnées du point en latitude et longitude
+     */
+    QPointF latLonFromPixel(const QPointF& pixel);
 
     /**
      * Génère une clé unique pour une tuile
