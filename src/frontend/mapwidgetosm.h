@@ -127,7 +127,8 @@ private slots:
     /**
      * Slot appelé lorsque le téléchargement d'une tuile est terminé
      */
-    void tileDownloaded();
+    void tileDownloaded(QNetworkReply* reply);
+
 
 private:
 
