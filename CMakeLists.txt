@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # ------------------------------
 # Qt6 MinGW
 # ------------------------------
-set(CMAKE_PREFIX_PATH "C:/Qt/6.9.3/mingw_64")
+set(CMAKE_PREFIX_PATH "E:/Qt/6.9.3/mingw_64")
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets OpenGL Network)
 
 # ------------------------------
