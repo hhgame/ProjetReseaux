@@ -1,0 +1,40 @@
+#include "simulateur.h"
+#include <iostream>
+
+Simulateur::Simulateur()
+    : tempsEcoule{0.0}, pasDeTemps{1.0}
+{}
+
+void Simulateur::ajouterVehicule(const Vehicule& v) {
+    vehicules.push_back(v);
+}
+
+void Simulateur::update() {
+    for (auto& v : vehicules) {
+        v.avancer(pasDeTemps);
+    }
+    tempsEcoule += pasDeTemps;
+}
+
+void Simulateur::afficherEtat() const {
+    std::cout << "=== Temps: " << tempsEcoule << "s ===" << std::endl;
+    for (const auto& v : vehicules) {
+        v.afficherEtat();
+    }
+}
+
+int Simulateur::getNombreVehicules() const {
+    return vehicules.size();
+}
+
+void Simulateur::reinitialiser() {
+    vehicules.clear();
+    tempsEcoule = 0.0;
+}
+
+void Simulateur::setPasDeTemps(double dt) {
+    pasDeTemps = dt;
+}
+
+void Simulateur::lierAuGraphe() {
+}
