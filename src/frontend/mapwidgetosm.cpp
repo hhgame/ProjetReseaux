@@ -202,12 +202,18 @@ void MapWidgetOSM::loadTiles()
             QString key = tileKey(x, y, zoomLevel);
 
             if (!tiles.contains(key)) {
-                QUrl url(QString("https://a.tile.openstreetmap.fr/osmfr/%1/%2/%3.png")
+                /*QUrl url(QString("https://a.tile.openstreetmap.fr/osmfr/%1/%2/%3.png")
+                             .arg(zoomLevel).arg(x).arg(y));*/
+                QUrl url(QString("https://tile.openstreetmap.org/%1/%2/%3.png")
                              .arg(zoomLevel).arg(x).arg(y));
                 qDebug() << "Téléchargement tuile:" << url.toString();
 
                 QNetworkRequest req(url);
+<<<<<<< HEAD
                 req.setRawHeader("User-Agent", "MapWidgetOSMQt/2.0 (projetReseaux)");
+=======
+                req.setRawHeader("User-Agent",  "ProjetReseaux-MapWidget/1.0 (contact: hugoh@example.com)");
+>>>>>>> ed920521457d3371fc7d3d067a24f67706d20719
 
                 networkManager->get(req);
                 tiles.insert(key, {x, y, zoomLevel, QPixmap()});
