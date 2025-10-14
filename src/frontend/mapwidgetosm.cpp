@@ -207,7 +207,7 @@ void MapWidgetOSM::loadTiles()
                 qDebug() << "Téléchargement tuile:" << url.toString();
 
                 QNetworkRequest req(url);
-                req.setRawHeader("User-Agent", "MapWidgetOSMQt/1.0 (projetReseaux)");
+                req.setRawHeader("User-Agent", "MapWidgetOSMQt/2.0 (projetReseaux)");
 
                 networkManager->get(req);
                 tiles.insert(key, {x, y, zoomLevel, QPixmap()});
