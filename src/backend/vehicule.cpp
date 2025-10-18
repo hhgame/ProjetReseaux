@@ -1,8 +1,19 @@
 #include "vehicule.h"
 #include <cmath>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
 
 Vehicule::Vehicule(int id, double x, double y, double vitesse, double direction)
     : id{id}, x{x}, y{y}, vitesse{vitesse}, direction{direction}
+{
+    std::srand(std::time(0));
+    const int RANGE = MAX - MIN + 1;
+    rayonTransmission = (std::rand() % RANGE) + MIN;
+}
+
+Vehicule::Vehicule(int id, int rayonTrans, double x, double y, double vitesse, double direction)
+    : id{id}, x{x}, y{y}, vitesse{vitesse}, direction{direction}, rayonTransmission{rayonTrans}
 {}
 
 int Vehicule::getId() const
@@ -28,6 +39,10 @@ double Vehicule::getVitesse() const
 double Vehicule::getDirection() const
 {
     return direction;
+}
+
+int Vehicule::getRayonTransmission() const {
+    return rayonTransmission;
 }
 
 void Vehicule::setVitesse(double v)
