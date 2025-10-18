@@ -211,6 +211,7 @@ void MapWidgetOSM::loadTiles()
                 QNetworkRequest req(url);
                 req.setRawHeader("User-Agent",  "ProjetReseaux-MapWidget/1.0 (contact: hugoh@example.com)");
 
+
                 networkManager->get(req);
                 tiles.insert(key, {x, y, zoomLevel, QPixmap()});
             }
