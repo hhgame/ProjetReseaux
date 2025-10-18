@@ -31,6 +31,8 @@ add_executable(${PROJECT_NAME}
     src/frontend/mapwidgetosm.h
     src/backend/vehicule.h src/backend/vehicule.cpp
     src/backend/simulateur.h src/backend/simulateur.cpp
+    src/backend/grapheinterference.h src/backend/grapheinterference.cpp
+    src/backend/liencommunication.h src/backend/liencommunication.cpp
 
 )
 
@@ -38,6 +40,8 @@ add_executable(TestSimulationConsole
     src/backend/main_test_simulation_console.cpp
     src/backend/vehicule.h src/backend/vehicule.cpp
     src/backend/simulateur.h src/backend/simulateur.cpp
+    src/backend/grapheinterference.h src/backend/grapheinterference.cpp
+    src/backend/liencommunication.h src/backend/liencommunication.cpp
 )
 
 # ------------------------------
