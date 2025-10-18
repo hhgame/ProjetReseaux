@@ -29,6 +29,15 @@ add_executable(${PROJECT_NAME}
     src/backend/main.cpp
     src/frontend/mapwidgetosm.cpp
     src/frontend/mapwidgetosm.h
+    src/backend/vehicule.h src/backend/vehicule.cpp
+    src/backend/simulateur.h src/backend/simulateur.cpp
+
+)
+
+add_executable(TestSimulationConsole
+    src/backend/main_test_simulation_console.cpp
+    src/backend/vehicule.h src/backend/vehicule.cpp
+    src/backend/simulateur.h src/backend/simulateur.cpp
 )
 
 # ------------------------------
