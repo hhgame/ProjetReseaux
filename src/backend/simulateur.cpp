@@ -2,7 +2,7 @@
 #include <iostream>
 
 Simulateur::Simulateur()
-    : tempsEcoule{0.0}, pasDeTemps{1.0}
+    : gestionTemps(1.0)
 {}
 
 void Simulateur::ajouterVehicule(const Vehicule& v) {
@@ -11,15 +11,19 @@ void Simulateur::ajouterVehicule(const Vehicule& v) {
 }
 
 void Simulateur::update() {
+    if (!gestionTemps.estActif())
+        return;
+
     for (auto& v : vehicules) {
-        v.avancer(pasDeTemps);
+        v.avancer(gestionTemps.getPasDeTemps());
     }
-    tempsEcoule += pasDeTemps;
+
+    gestionTemps.avancer();
     graphe.majGraphe(vehicules);
 }
 
 void Simulateur::afficherEtat() const {
-    std::cout << "=== Temps: " << tempsEcoule << "s ===" << std::endl;
+    std::cout << "=== Temps: " << gestionTemps.getTempsCourant() << "s ===" << std::endl;
     for (const auto& v : vehicules) {
         v.afficherEtat();
     }
@@ -32,11 +36,11 @@ int Simulateur::getNombreVehicules() const {
 void Simulateur::reinitialiser() {
     vehicules.clear();
     graphe.majGraphe(vehicules);
-    tempsEcoule = 0.0;
+    gestionTemps.reinitialiser();
 }
 
 void Simulateur::setPasDeTemps(double dt) {
-    pasDeTemps = dt;
+    gestionTemps.setPasDeTemps(dt);
 }
 
 void Simulateur::lierAuGraphe() {
