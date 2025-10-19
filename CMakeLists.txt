@@ -34,10 +34,11 @@ add_executable(${PROJECT_NAME}
     src/backend/grapheinterference.h src/backend/grapheinterference.cpp
     src/backend/liencommunication.h src/backend/liencommunication.cpp
     src/backend/Arete.cpp src/backend/Arete.h src/backend/GrapheRoutier.cpp src/backend/GrapheRoutier.h src/backend/Noeud.cpp src/backend/Noeud.h
+    src/backend/gestiontemps.h src/backend/gestiontemps.cpp
 
 )
 
-add_executable(TestSimulationConsole
+add_executable(TestSimulation
     src/backend/main_test_simulation_console.cpp
     src/backend/vehicule.h src/backend/vehicule.cpp
     src/backend/simulateur.h src/backend/simulateur.cpp

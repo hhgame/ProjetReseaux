@@ -2,6 +2,7 @@
 #define SIMULATEUR_H
 
 #include <vector>
+#include "gestiontemps.h"
 #include "vehicule.h"
 #include "grapheinterference.h"
 
@@ -10,8 +11,7 @@ class Simulateur {
         std::vector<Vehicule> vehicules;
         // Graphe des interference entre voiture
         GrapheInterference graphe;
-        double tempsEcoule;
-        double pasDeTemps; //Temps qui sépare chaque update
+        GestionTemps gestionTemps;
 
     public:
         Simulateur();
@@ -19,12 +19,11 @@ class Simulateur {
         void ajouterVehicule(const Vehicule& v);
         void update();
         void afficherEtat() const;
-
         int getNombreVehicules() const;
-
-        //Méthode a prévoir
         void reinitialiser();
         void setPasDeTemps(double dt);
+
+        //Méthode a prévoir
         void lierAuGraphe();
 };
 
