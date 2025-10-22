@@ -1,7 +1,8 @@
 #ifndef VEHICULE_H
 #define VEHICULE_H
 
-#include <iostream>
+const int MIN = 100;
+const int MAX = 500;
 
 class Vehicule {
     private:
@@ -10,9 +11,11 @@ class Vehicule {
         double y;
         double vitesse;
         double direction; // en degrés
+        int rayonTransmission;
 
     public:
         Vehicule(int id, double x = 0.0, double y = 0.0, double vitesse = 0.0, double direction = 0.0);
+        Vehicule(int id, int rayonTrans, double x = 0.0, double y = 0.0, double vitesse = 0.0, double direction = 0.0);
 
         // Getters
         int getId() const;
@@ -20,6 +23,7 @@ class Vehicule {
         double getY() const;
         double getVitesse() const;
         double getDirection() const;
+        int getRayonTransmission() const;
 
         // Setters
         void setVitesse(double v);

@@ -7,6 +7,7 @@ Simulateur::Simulateur()
 
 void Simulateur::ajouterVehicule(const Vehicule& v) {
     vehicules.push_back(v);
+    graphe.majGraphe(vehicules);
 }
 
 void Simulateur::update() {
@@ -14,6 +15,7 @@ void Simulateur::update() {
         v.avancer(pasDeTemps);
     }
     tempsEcoule += pasDeTemps;
+    graphe.majGraphe(vehicules);
 }
 
 void Simulateur::afficherEtat() const {
@@ -29,6 +31,7 @@ int Simulateur::getNombreVehicules() const {
 
 void Simulateur::reinitialiser() {
     vehicules.clear();
+    graphe.majGraphe(vehicules);
     tempsEcoule = 0.0;
 }
 

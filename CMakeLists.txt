@@ -31,6 +31,9 @@ add_executable(${PROJECT_NAME}
     src/frontend/mapwidgetosm.h
     src/backend/vehicule.h src/backend/vehicule.cpp
     src/backend/simulateur.h src/backend/simulateur.cpp
+    src/backend/grapheinterference.h src/backend/grapheinterference.cpp
+    src/backend/liencommunication.h src/backend/liencommunication.cpp
+    src/backend/Arete.cpp src/backend/Arete.h src/backend/GrapheRoutier.cpp src/backend/GrapheRoutier.h src/backend/Noeud.cpp src/backend/Noeud.h
 
 )
 
@@ -38,6 +41,9 @@ add_executable(TestSimulationConsole
     src/backend/main_test_simulation_console.cpp
     src/backend/vehicule.h src/backend/vehicule.cpp
     src/backend/simulateur.h src/backend/simulateur.cpp
+    src/backend/grapheinterference.h src/backend/grapheinterference.cpp
+    src/backend/liencommunication.h src/backend/liencommunication.cpp
+    src/backend/Arete.cpp src/backend/Arete.h src/backend/GrapheRoutier.cpp src/backend/GrapheRoutier.h src/backend/Noeud.cpp src/backend/Noeud.h
 )
 
 # ------------------------------
