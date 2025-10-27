@@ -5,7 +5,10 @@
 #include "Noeud.h"
 #include "Arete.h"
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5467289d52eb9a8094f8d9e318f4196ff04ef2c3
 class GrapheRoutier {
 private:
     std::unordered_map<long, Noeud> noeuds;

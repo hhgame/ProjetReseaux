@@ -1,5 +1,6 @@
 #include "simulateur.h"
 #include <iostream>
+<<<<<<< HEAD
 #include <string>
 
 Simulateur::Simulateur()
@@ -10,6 +11,12 @@ Simulateur::Simulateur()
     routes.chargerDepuisOSM(pathMap);
     routes.afficherResume();
 }
+=======
+
+Simulateur::Simulateur()
+    : tempsEcoule{0.0}, pasDeTemps{1.0}
+{}
+>>>>>>> 5467289d52eb9a8094f8d9e318f4196ff04ef2c3
 
 void Simulateur::ajouterVehicule(const Vehicule& v) {
     vehicules.push_back(v);

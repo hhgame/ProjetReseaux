@@ -1,6 +1,9 @@
 #include "GrapheRoutier.h"
+<<<<<<< HEAD
 #include <QFile>
 #include <QXmlStreamReader>
+=======
+>>>>>>> 5467289d52eb9a8094f8d9e318f4196ff04ef2c3
 #include <iostream>
 #include <fstream>
 #include <cmath>
@@ -10,12 +13,15 @@
 
 using namespace std;
 
+<<<<<<< HEAD
 // Limites Mulhouse
 const double MIN_LAT = 47.66;
 const double MAX_LAT = 47.84;
 const double MIN_LON = 7.207;
 const double MAX_LON = 7.473;
 
+=======
+>>>>>>> 5467289d52eb9a8094f8d9e318f4196ff04ef2c3
 
 GrapheRoutier::GrapheRoutier(bool oriente) : estOriente(oriente) {}
 
@@ -54,7 +60,11 @@ double GrapheRoutier::calculerDistance(const Noeud& n1, const Noeud& n2) const {
     return R * c;
 }
 
+<<<<<<< HEAD
 /*bool GrapheRoutier::chargerDepuisOSM(const std::string& cheminFichier) {
+=======
+bool GrapheRoutier::chargerDepuisOSM(const std::string& cheminFichier) {
+>>>>>>> 5467289d52eb9a8094f8d9e318f4196ff04ef2c3
     std::ifstream ifs(cheminFichier);
     if (!ifs) {
         std::cerr << "Erreur: impossible d’ouvrir " << cheminFichier << "\n";
@@ -65,9 +75,16 @@ double GrapheRoutier::calculerDistance(const Noeud& n1, const Noeud& n2) const {
     ss << ifs.rdbuf();
     const std::string xml = ss.str();
 
+<<<<<<< HEAD
     // 1️⃣ Charger les noeuds <node>
     std::regex nodeRe(
         "<node[^>]*\\bid\\s*=\\s*\"(-?\\d+)\"[^>]*\\blat\\s*=\\s*\"([-0-9.]+)\"[^>]*\\blon\\s*=\\s*\"([-0-9.]+)\"[^>]*//*>",
+=======
+    // 1) Noeuds : <node id="..." lat="..." lon="..."/>
+    // Note: toutes les séquences \ sont échappées (\\b, \\s, \\" etc.)
+    std::regex nodeRe(
+        "<node[^>]*\\bid\\s*=\\s*\"(-?\\d+)\"[^>]*\\blat\\s*=\\s*\"([-0-9.]+)\"[^>]*\\blon\\s*=\\s*\"([-0-9.]+)\"[^>]*/?>",
+>>>>>>> 5467289d52eb9a8094f8d9e318f4196ff04ef2c3
         std::regex::icase
         );
 
@@ -75,6 +92,7 @@ double GrapheRoutier::calculerDistance(const Noeud& n1, const Noeud& n2) const {
         const long   id  = std::stol((*it)[1].str());
         const double lat = std::stod((*it)[2].str());
         const double lon = std::stod((*it)[3].str());
+<<<<<<< HEAD
 
         // Filtrer par limites Mulhouse
         if (lat < MIN_LAT || lat > MAX_LAT || lon < MIN_LON || lon > MAX_LON)
@@ -84,11 +102,18 @@ double GrapheRoutier::calculerDistance(const Noeud& n1, const Noeud& n2) const {
     }
 
     // 2️⃣ Charger les ways <way>
+=======
+        ajouterNoeud(Noeud(id, lat, lon));
+    }
+
+    // 2) Extraire toutes les <way>...</way> (match multi-lignes via [\\s\\S])
+>>>>>>> 5467289d52eb9a8094f8d9e318f4196ff04ef2c3
     std::regex wayRe(
         "<way\\b[^>]*>([\\s\\S]*?)</way>",
         std::regex::icase
         );
 
+<<<<<<< HEAD
     std::regex ndRe(
         "<nd[^>]*\\bref\\s*=\\s*\"(-?\\d+)\"[^>]*//*?>",
         std::regex::icase
@@ -105,10 +130,25 @@ double GrapheRoutier::calculerDistance(const Noeud& n1, const Noeud& n2) const {
         // Filtrer uniquement les routes
         if (!std::regex_search(body, highwayTagRe))
             continue;
+=======
+    // 3) Dans chaque way, relier les nd successifs : <nd ref="..."/>
+    std::regex ndRe(
+        "<nd[^>]*\\bref\\s*=\\s*\"(-?\\d+)\"[^>]*/?>",
+        std::regex::icase
+        );
+
+    for (std::sregex_iterator wit(xml.begin(), xml.end(), wayRe), wend; wit != wend; ++wit) {
+        const std::string body = (*wit)[1].str();
+
+        // (optionnel) : filtrer uniquement les vraies routes OSM
+        // if (!std::regex_search(body, std::regex("<tag[^>]*\\bk\\s*=\\s*\"highway\"", std::regex::icase)))
+        //     continue;
+>>>>>>> 5467289d52eb9a8094f8d9e318f4196ff04ef2c3
 
         long prev = -1;
         for (std::sregex_iterator nit(body.begin(), body.end(), ndRe), nend; nit != nend; ++nit) {
             const long ref = std::stol((*nit)[1].str());
+<<<<<<< HEAD
             const Noeud* a = getNoeudParId(prev);
             const Noeud* b = getNoeudParId(ref);
 
@@ -118,12 +158,24 @@ double GrapheRoutier::calculerDistance(const Noeud& n1, const Noeud& n2) const {
                 if (!estOriente) ajouterArete(Arete(ref, prev, d));
             }
 
+=======
+            if (prev != -1) {
+                const Noeud* a = getNoeudParId(prev);
+                const Noeud* b = getNoeudParId(ref);
+                if (a && b) {
+                    const double d = calculerDistance(*a, *b);
+                    ajouterArete(Arete(prev, ref, d));
+                    if (!estOriente) ajouterArete(Arete(ref, prev, d));
+                }
+            }
+>>>>>>> 5467289d52eb9a8094f8d9e318f4196ff04ef2c3
             prev = ref;
         }
     }
 
     afficherResume();
     return true;
+<<<<<<< HEAD
 }*/
 
 bool GrapheRoutier::chargerDepuisOSM(const std::string& cheminFichier)
@@ -209,3 +261,8 @@ bool GrapheRoutier::chargerDepuisOSM(const std::string& cheminFichier)
 
 
 
+=======
+}
+
+
+>>>>>>> 5467289d52eb9a8094f8d9e318f4196ff04ef2c3
