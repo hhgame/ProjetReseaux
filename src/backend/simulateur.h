@@ -4,12 +4,14 @@
 #include <vector>
 #include "vehicule.h"
 #include "grapheinterference.h"
+#include "GrapheRoutier.h"
 
 class Simulateur {
     private:
         std::vector<Vehicule> vehicules;
         // Graphe des interference entre voiture
         GrapheInterference graphe;
+        GrapheRoutier routes;
         double tempsEcoule;
         double pasDeTemps; //Temps qui sépare chaque update
 

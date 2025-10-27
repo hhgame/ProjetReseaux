@@ -1,9 +1,15 @@
 #include "simulateur.h"
 #include <iostream>
+#include <string>
 
 Simulateur::Simulateur()
     : tempsEcoule{0.0}, pasDeTemps{1.0}
-{}
+{
+    // Chemin du fichier map
+    const std::string pathMap = "../../map"; // ton fichier s'appelle "map"
+    routes.chargerDepuisOSM(pathMap);
+    routes.afficherResume();
+}
 
 void Simulateur::ajouterVehicule(const Vehicule& v) {
     vehicules.push_back(v);

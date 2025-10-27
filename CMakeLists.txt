@@ -13,6 +13,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_PREFIX_PATH "C:/Qt/6.9.3/mingw_64")
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets OpenGL Network)
 
+
 # ------------------------------
 # Activer AUTOMOC, AUTORCC, AUTOUIC
 # ------------------------------
@@ -56,3 +57,4 @@ target_link_libraries(${PROJECT_NAME}
     Qt6::OpenGL
     Qt6::Network
 )
+

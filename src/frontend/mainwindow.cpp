@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include <QVBoxLayout>
 #include <QPixmap>
+#include "../backend/simulateur.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -9,6 +10,8 @@ MainWindow::MainWindow(QWidget *parent)
     // Créer un widget central
     QWidget* central = new QWidget(this);
     setCentralWidget(central);
+
+    s = new Simulateur{};
 
     // Layout vertical
     QVBoxLayout* layout = new QVBoxLayout(central);

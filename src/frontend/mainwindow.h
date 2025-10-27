@@ -5,6 +5,7 @@
 
 #include <QMainWindow>
 #include "mapwidgetosm.h"
+#include "../backend/simulateur.h"
 
 class MainWindow : public QMainWindow
 {
@@ -16,6 +17,7 @@ public:
 
 private:
     MapWidgetOSM* mapWidget;
+    Simulateur* s;
 };
 
 #endif // MAINWINDOW_H
