@@ -4,6 +4,9 @@
 const int MIN = 100;
 const int MAX = 500;
 
+class Noeud;
+class GrapheRoutier;
+
 class Vehicule {
     private:
         int id;
@@ -12,6 +15,10 @@ class Vehicule {
         double vitesse;
         double direction; // en degrés
         int rayonTransmission;
+
+        long noeudActuelId = -1;
+        long noeudDestinationId = -1;
+        double positionSurArete = 0.0;
 
     public:
         Vehicule(int id, double x = 0.0, double y = 0.0, double vitesse = 0.0, double direction = 0.0);
@@ -29,9 +36,14 @@ class Vehicule {
         void setVitesse(double v);
         void setDirection(double dir);
 
+        void avancerSurGraphe(double dt, const GrapheRoutier& graphe);
+        void setNoeudDepart(long id);
+
         // Méthodes
         void avancer(double dt); // déplace le véhicule selon sa vitesse et direction
         void afficherEtat() const;
+        void placerAuNoeud(const Noeud& n);
+
 };
 
 #endif // VEHICULE_H

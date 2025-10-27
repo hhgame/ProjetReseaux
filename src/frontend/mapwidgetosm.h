@@ -80,6 +80,8 @@ private:
     double lon;
 };
 
+class Vehicule;
+class Simulateur;
 
 /**
  * Widget dédié à l'affichage des tuiles OpenStreetMap.
@@ -93,7 +95,7 @@ public:
      * Constructeur du widget OSM
      * @param parent Widget parent éventuel
      */
-    explicit MapWidgetOSM(QWidget* parent = nullptr);
+    explicit MapWidgetOSM(QWidget* parent = nullptr, Simulateur* s = nullptr);
 
     /**
      * Définit le centre de la carte en latitude/longitude
@@ -115,6 +117,8 @@ public:
      * @param lon Longitude du point
      */
     void addOverlay(const QPixmap& pix, double lat, double lon);
+
+    void updateVehicules(const std::vector<Vehicule>& vehicules);
 
 protected:
     /**
@@ -181,6 +185,18 @@ private:
 
     /** Position de la souris sur le pan */
     QPoint lastMousePos;
+
+    /** Pixmap des voitures */
+    QPixmap voiturePixmap;
+
+    /** Simulateur */
+    Simulateur* simulateur = nullptr;
+
+    /**
+     *  Méthode de mise à jour des véhicules
+     */
+    void updateVehicules();
+
 
     /**
      * Charge les tuiles autour du centre

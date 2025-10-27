@@ -4,31 +4,36 @@
 #include <vector>
 #include "vehicule.h"
 #include "grapheinterference.h"
-<<<<<<< HEAD
 #include "GrapheRoutier.h"
-=======
->>>>>>> 5467289d52eb9a8094f8d9e318f4196ff04ef2c3
 
 class Simulateur {
     private:
         std::vector<Vehicule> vehicules;
+        bool rayonTransmissionAleatoire = true;
+        int rayonTransmission;
+        int nb_vehicule = 100;
         // Graphe des interference entre voiture
         GrapheInterference graphe;
-<<<<<<< HEAD
         GrapheRoutier routes;
-=======
->>>>>>> 5467289d52eb9a8094f8d9e318f4196ff04ef2c3
         double tempsEcoule;
         double pasDeTemps; //Temps qui sépare chaque update
 
     public:
         Simulateur();
 
-        void ajouterVehicule(const Vehicule& v);
+        void ajouterVehiculesAleatoires(
+            double vitesseMin = 5.0,
+            double vitesseMax = 20.0
+            );
+
         void update();
         void afficherEtat() const;
 
         int getNombreVehicules() const;
+
+        void placerVehiculeSurNoeud(int idVehicule, long idNoeud);
+        const std::vector<Vehicule>& getVehicules() const;
+
 
         //Méthode a prévoir
         void reinitialiser();

@@ -5,10 +5,7 @@
 #include "Noeud.h"
 #include "Arete.h"
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 5467289d52eb9a8094f8d9e318f4196ff04ef2c3
 class GrapheRoutier {
 private:
     std::unordered_map<long, Noeud> noeuds;
@@ -19,8 +16,12 @@ public:
     GrapheRoutier(bool oriente = false);
     void ajouterNoeud(const Noeud& n);
     void ajouterArete(const Arete& a);
-    Noeud* getNoeudParId(long id);
+    Noeud* getNoeudParId(long id) const;
     void afficherResume() const;
+    const std::unordered_map<long, Noeud>& getNoeuds() const;
+    const std::vector<Arete>& getAretes() const;
+    bool get_estOriente() const;
+
 
     bool chargerDepuisOSM(const std::string& cheminFichier);
     double calculerDistance(const Noeud& n1, const Noeud& n2) const;
