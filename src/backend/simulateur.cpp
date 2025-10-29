@@ -6,13 +6,13 @@
 #include <cmath>
 
 Simulateur::Simulateur()
-    : tempsEcoule{0.0}, pasDeTemps{1.0}
+    : tempsEcoule{0.0}, pasDeTemps{0.5}, facteurVitesse{1.0}
 {
-    // Chemin du fichier map
-    const std::string pathMap = "D:/ProjetReseaux/ProjetReseaux/map";
+    const std::string pathMap = "../ProjetReseaux/map";
     routes.chargerDepuisOSM(pathMap);
     routes.afficherResume();
-    ajouterVehiculesAleatoires();
+    ajouterVehiculesAleatoires(2.0, 10.0);
+
 }
 
 void Simulateur::ajouterVehiculesAleatoires(
@@ -39,25 +39,19 @@ void Simulateur::ajouterVehiculesAleatoires(
     }
 
     for (int i = 0; i < nb_vehicule; i++) {
-        // --- Choisir un noeud aléatoire ---
         long idNoeud = idsNoeuds[std::rand() % idsNoeuds.size()];
         const Noeud& noeud = noeudsMap.at(idNoeud);
-
-        // --- Rayon de transmission ---
         int rayon = rayonTransmissionAleatoire
                         ? (std::rand() % (MAX - MIN + 1)) + MIN
                         : rayonTransmission;
-
-        // --- Vitesse aléatoire ---
         double vitesse = vitesseMin + (std::rand() / (double)RAND_MAX) * (vitesseMax - vitesseMin);
-
-        // --- Direction aléatoire ---
         double direction = std::rand() % 360;
 
-        // --- Création du véhicule ---
         Vehicule v(i + 1, rayon, noeud.getLatitude(), noeud.getLongitude(), vitesse, direction);
 
-        // --- Ajout au simulateur ---
+        // 🟢 Correction : il faut lui dire sur quel nœud il démarre
+        v.setNoeudDepart(idNoeud);
+
         vehicules.push_back(v);
     }
 
@@ -68,20 +62,25 @@ void Simulateur::ajouterVehiculesAleatoires(
 
 
 void Simulateur::update() {
-    tempsEcoule += pasDeTemps;
+    if (facteurVitesse <= 0.0) return;
 
-    // Seuls les véhicules sont mis à jour tous les 5 secondes
-    static double compteur = 0.0;
-    compteur += pasDeTemps;
+    double dt = pasDeTemps * facteurVitesse;
+    tempsEcoule += dt;
 
-    if (compteur >= 5.0) {
-        for (auto& v : vehicules) {
-            v.avancerSurGraphe(compteur, routes); // avancer avec le temps cumulé
-        }
-        graphe.majGraphe(vehicules);
-        compteur = 0.0;
+    for (auto& v : vehicules) {
+        v.avancerSurGraphe(dt, routes);
+    }
+
+    graphe.majGraphe(vehicules);
+
+    // 🧪 test temporaire
+    static int cpt = 0;
+    if (++cpt % 10 == 0) {
+        std::cout << "== UPDATE ==\n";
+        vehicules[0].afficherEtat();
     }
 }
+
 
 void Simulateur::afficherEtat() const {
     std::cout << "=== Temps: " << tempsEcoule << "s ===" << std::endl;
@@ -110,4 +109,11 @@ void Simulateur::lierAuGraphe() {
 
 const std::vector<Vehicule>& Simulateur::getVehicules() const {
     return vehicules;
+}
+
+void Simulateur::setFacteurVitesse(double facteur) {
+    facteurVitesse = facteur;
+}
+double Simulateur::getFacteurVitesse() const {
+    return facteurVitesse;
 }

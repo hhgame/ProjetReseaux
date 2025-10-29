@@ -21,6 +21,9 @@ public:
     const std::unordered_map<long, Noeud>& getNoeuds() const;
     const std::vector<Arete>& getAretes() const;
     bool get_estOriente() const;
+    std::vector<long> getVoisins(long id) const;
+    int degreNoeud(long id) const;
+
 
 
     bool chargerDepuisOSM(const std::string& cheminFichier);

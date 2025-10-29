@@ -19,6 +19,8 @@ class Vehicule {
         long noeudActuelId = -1;
         long noeudDestinationId = -1;
         double positionSurArete = 0.0;
+        long dernierNoeudId = -1;
+
 
     public:
         Vehicule(int id, double x = 0.0, double y = 0.0, double vitesse = 0.0, double direction = 0.0);
@@ -43,6 +45,10 @@ class Vehicule {
         void avancer(double dt); // déplace le véhicule selon sa vitesse et direction
         void afficherEtat() const;
         void placerAuNoeud(const Noeud& n);
+
+        void setDernierNoeudId(long id) { dernierNoeudId = id; }
+        long getDernierNoeudId() const { return dernierNoeudId; }
+
 
 };
 

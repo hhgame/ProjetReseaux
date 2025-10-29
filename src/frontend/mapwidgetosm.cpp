@@ -129,7 +129,7 @@ MapWidgetOSM::MapWidgetOSM(QWidget* parent,Simulateur* s)
         setZoom(zoomLevel - 1);
     });
 
-    voiturePixmap = QPixmap("D:/ProjetReseaux/ProjetReseaux/voiture.png");
+    voiturePixmap = QPixmap("../ProjetReseaux/voiture.png");
     if (voiturePixmap.isNull()) {
         qDebug() << "⚠️ Impossible de charger voiture.png";
         // fallback : cercle rouge
@@ -144,10 +144,11 @@ MapWidgetOSM::MapWidgetOSM(QWidget* parent,Simulateur* s)
     QTimer* vehiculeTimer = new QTimer(this);
     connect(vehiculeTimer, &QTimer::timeout, this, [this]() {
         if (simulateur) {
+            simulateur->update();
             updateVehicules();
         }
     });
-    vehiculeTimer->start(5000); // mise à jour toutes les 5 secondes
+    vehiculeTimer->start(100);
 }
 
 void MapWidgetOSM::setCentre(double lat, double lon)

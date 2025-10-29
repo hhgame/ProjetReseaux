@@ -17,6 +17,7 @@ class Simulateur {
         GrapheRoutier routes;
         double tempsEcoule;
         double pasDeTemps; //Temps qui sépare chaque update
+        double facteurVitesse; // facteur de vitesse de simulation (1.0 = normal, 2.0 = 2x plus rapide, 0 = pause)
 
     public:
         Simulateur();
@@ -33,6 +34,10 @@ class Simulateur {
 
         void placerVehiculeSurNoeud(int idVehicule, long idNoeud);
         const std::vector<Vehicule>& getVehicules() const;
+
+        void setFacteurVitesse(double facteur);
+        double getFacteurVitesse() const;
+
 
 
         //Méthode a prévoir
