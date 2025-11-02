@@ -35,6 +35,8 @@ add_executable(${PROJECT_NAME}
     src/backend/grapheinterference.h src/backend/grapheinterference.cpp
     src/backend/liencommunication.h src/backend/liencommunication.cpp
     src/backend/Arete.cpp src/backend/Arete.h src/backend/GrapheRoutier.cpp src/backend/GrapheRoutier.h src/backend/Noeud.cpp src/backend/Noeud.h
+    src/frontend/toolbar.h src/frontend/toolbar.cpp
+    src/frontend/paramwindow.h src/frontend/paramwindow.cpp
 
 )
 

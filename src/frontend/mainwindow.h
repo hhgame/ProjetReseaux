@@ -2,9 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
-#include <QMainWindow>
 #include "mapwidgetosm.h"
+#include "toolbar.h"
+#include "paramwindow.h"
 #include "../backend/simulateur.h"
 
 class MainWindow : public QMainWindow
@@ -12,12 +12,18 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void ouvrirParametres();
+    void miseAJourVitesse(double facteur);
+
 private:
-    MapWidgetOSM* mapWidget;
     Simulateur* s;
+    MapWidgetOSM* mapWidget;
+    ToolBar* toolbar;
+    ParamWindow* paramWindow;
 };
 
 #endif // MAINWINDOW_H

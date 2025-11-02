@@ -7,43 +7,48 @@
 #include "GrapheRoutier.h"
 
 class Simulateur {
-    private:
-        std::vector<Vehicule> vehicules;
-        bool rayonTransmissionAleatoire = true;
-        int rayonTransmission;
-        int nb_vehicule = 100;
-        // Graphe des interference entre voiture
-        GrapheInterference graphe;
-        GrapheRoutier routes;
-        double tempsEcoule;
-        double pasDeTemps; //Temps qui sépare chaque update
-        double facteurVitesse; // facteur de vitesse de simulation (1.0 = normal, 2.0 = 2x plus rapide, 0 = pause)
+private:
+    std::vector<Vehicule> vehicules;
 
-    public:
-        Simulateur();
+    bool rayonTransmissionAleatoire = true;
+    int rayonTransmission = 100;
+    int nbVehicules = 100;
 
-        void ajouterVehiculesAleatoires(
-            double vitesseMin = 5.0,
-            double vitesseMax = 20.0
-            );
+    GrapheInterference graphe;
+    GrapheRoutier routes;
 
-        void update();
-        void afficherEtat() const;
+    double tempsEcoule = 0.0;
+    double pasDeTemps = 0.5;       // temps entre updates
+    double facteurVitesse = 1.0;   // 1.0 = normal, 2.0 = x2, 0 = pause
 
-        int getNombreVehicules() const;
+public:
+    Simulateur();
 
-        void placerVehiculeSurNoeud(int idVehicule, long idNoeud);
-        const std::vector<Vehicule>& getVehicules() const;
+    // Simulation
+    void ajouterVehiculesAleatoires(double vitesseMin = 5.0, double vitesseMax = 20.0);
+    void update();
+    void afficherEtat() const;
+    void reinitialiser();
+    void lierAuGraphe();
 
-        void setFacteurVitesse(double facteur);
-        double getFacteurVitesse() const;
+    // Accesseurs
+    int getNombreVehicules() const;
+    const std::vector<Vehicule>& getVehicules() const;
 
+    double getFacteurVitesse() const;
+    void setFacteurVitesse(double facteur);
+    double getPasDeTemps() const;
+    void setPasDeTemps(double dt);
 
+    int getNbVehicules() const;
+    void setNbVehicules(int n);
+    int getRayonTransmission() const;
+    void setRayonTransmission(int r);
 
-        //Méthode a prévoir
-        void reinitialiser();
-        void setPasDeTemps(double dt);
-        void lierAuGraphe();
+    void mettreAJourNbVehicules(int nouveauNb);
+
+    // Gestion véhicules
+    void placerVehiculeSurNoeud(int idVehicule, long idNoeud);
 };
 
 #endif // SIMULATEUR_H
