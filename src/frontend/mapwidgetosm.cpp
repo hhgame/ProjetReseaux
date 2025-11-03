@@ -1,9 +1,11 @@
 #include "mapwidgetosm.h"
+#include "../backend/simulateur.h"
 #include <QPainter>
 #include <QtMath>
 #include <QUrl>
 #include <QDebug>
 #include <QPushButton>
+#include <QTimer>
 
 Tuile::Tuile() :
     x{0}, y{0}, z{0}
@@ -93,13 +95,14 @@ QPixmap Overlay::getPixmap() const
 }
 
 
-MapWidgetOSM::MapWidgetOSM(QWidget* parent)
+MapWidgetOSM::MapWidgetOSM(QWidget* parent,Simulateur* s)
     : QWidget(parent),
     networkManager(new QNetworkAccessManager(this)),
     centerLat(47.75),
     centerLon(7.34),
     zoomLevel(MIN_ZOOM),
-    tileSize(256)
+    tileSize(256),
+    simulateur{s}
 {
     connect(networkManager, &QNetworkAccessManager::finished,
             this, &MapWidgetOSM::tileDownloaded);
@@ -126,6 +129,26 @@ MapWidgetOSM::MapWidgetOSM(QWidget* parent)
         setZoom(zoomLevel - 1);
     });
 
+    voiturePixmap = QPixmap("../../voiture.png");
+    if (voiturePixmap.isNull()) {
+        qDebug() << "⚠️ Impossible de charger voiture.png";
+        // fallback : cercle rouge
+        voiturePixmap = QPixmap(16, 16);
+        voiturePixmap.fill(Qt::transparent);
+        QPainter p(&voiturePixmap);
+        p.setBrush(Qt::red);
+        p.setPen(Qt::black);
+        p.drawEllipse(0, 0, 16, 16);
+        p.end();
+    }
+    QTimer* vehiculeTimer = new QTimer(this);
+    connect(vehiculeTimer, &QTimer::timeout, this, [this]() {
+        if (simulateur) {
+            simulateur->update();
+            updateVehicules();
+        }
+    });
+    vehiculeTimer->start(100);
 }
 
 void MapWidgetOSM::setCentre(double lat, double lon)
@@ -202,12 +225,15 @@ void MapWidgetOSM::loadTiles()
             QString key = tileKey(x, y, zoomLevel);
 
             if (!tiles.contains(key)) {
-                QUrl url(QString("https://a.tile.openstreetmap.fr/osmfr/%1/%2/%3.png")
+                /*QUrl url(QString("https://a.tile.openstreetmap.fr/osmfr/%1/%2/%3.png")
+                             .arg(zoomLevel).arg(x).arg(y));*/
+                QUrl url(QString("https://tile.openstreetmap.org/%1/%2/%3.png")
                              .arg(zoomLevel).arg(x).arg(y));
                 qDebug() << "Téléchargement tuile:" << url.toString();
 
                 QNetworkRequest req(url);
-                req.setRawHeader("User-Agent", "MapWidgetOSMQt/1.0 (projetReseaux)");
+                req.setRawHeader("User-Agent",  "ProjetReseaux-MapWidget/1.0 (contact: hugoh@example.com)");
+
 
                 networkManager->get(req);
                 tiles.insert(key, {x, y, zoomLevel, QPixmap()});
@@ -395,4 +421,36 @@ void MapWidgetOSM::resizeEvent(QResizeEvent*)
 
     zoomInBtn->move(width() - btnSize - margin, margin);
     zoomOutBtn->move(width() - btnSize - margin, margin + btnSize + spacing);
+}
+
+
+void MapWidgetOSM::updateVehicules()
+{
+    overlays.clear();
+
+    if (!simulateur) return;
+
+    const auto& vehicules = simulateur->getVehicules(); // méthode que tu dois avoir dans Simulateur
+
+    // Taille souhaitée de l'image en pixels sur la carte
+    const int tailleVehicule = 20; // ou 8, selon ce que tu veux
+
+    for (const auto& v : vehicules) {
+        // 1. Redimensionner l'image
+        QPixmap scaled = voiturePixmap.scaled(
+            tailleVehicule, tailleVehicule,
+            Qt::KeepAspectRatio, Qt::SmoothTransformation
+            );
+
+        // 2. Appliquer rotation
+        QPixmap rotated = scaled.transformed(
+            QTransform().rotate(v.getDirection()),
+            Qt::SmoothTransformation
+            );
+
+        // 3. Ajouter à la carte
+        addOverlay(rotated, v.getX(), v.getY());
+    }
+
+    update(); // redessine la carte avec les véhicules mis à jour
 }

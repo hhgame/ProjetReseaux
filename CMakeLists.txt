@@ -10,8 +10,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # ------------------------------
 # Qt6 MinGW
 # ------------------------------
-set(CMAKE_PREFIX_PATH "C:/Qt/6.9.3/mingw_64")
+set(CMAKE_PREFIX_PATH "E:/Qt/6.9.3/mingw_64")
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets OpenGL Network)
+
 
 # ------------------------------
 # Activer AUTOMOC, AUTORCC, AUTOUIC
@@ -29,6 +30,14 @@ add_executable(${PROJECT_NAME}
     src/backend/main.cpp
     src/frontend/mapwidgetosm.cpp
     src/frontend/mapwidgetosm.h
+    src/backend/vehicule.h src/backend/vehicule.cpp
+    src/backend/simulateur.h src/backend/simulateur.cpp
+    src/backend/grapheinterference.h src/backend/grapheinterference.cpp
+    src/backend/liencommunication.h src/backend/liencommunication.cpp
+    src/backend/Arete.cpp src/backend/Arete.h src/backend/GrapheRoutier.cpp src/backend/GrapheRoutier.h src/backend/Noeud.cpp src/backend/Noeud.h
+    src/frontend/toolbar.h src/frontend/toolbar.cpp
+    src/frontend/paramwindow.h src/frontend/paramwindow.cpp
+
 )
 
 # ------------------------------
@@ -41,3 +50,4 @@ target_link_libraries(${PROJECT_NAME}
     Qt6::OpenGL
     Qt6::Network
 )
+
