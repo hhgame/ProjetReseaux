@@ -7,7 +7,7 @@
 #define RAYON_MAX 200
 
 Simulateur::Simulateur() {
-    const std::string pathMap = "../ProjetReseaux/map";
+    const std::string pathMap = "../../map";
     routes.chargerDepuisOSM(pathMap);
     routes.afficherResume();
     ajouterVehiculesAleatoires(2.0, 10.0);
