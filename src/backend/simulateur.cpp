@@ -1,25 +1,19 @@
 #include "simulateur.h"
 #include <iostream>
-#include <string>
 #include <cstdlib>
 #include <ctime>
-#include <cmath>
 
-Simulateur::Simulateur()
-    : tempsEcoule{0.0}, pasDeTemps{0.5}, facteurVitesse{1.0}
-{
-    const std::string pathMap = "../ProjetReseaux/map";
+#define RAYON_MIN 50
+#define RAYON_MAX 200
+
+Simulateur::Simulateur() {
+    const std::string pathMap = "../../map";
     routes.chargerDepuisOSM(pathMap);
     routes.afficherResume();
     ajouterVehiculesAleatoires(2.0, 10.0);
-
 }
 
-void Simulateur::ajouterVehiculesAleatoires(
-    double vitesseMin,
-    double vitesseMax
-    ) {
-    // Initialiser RNG une seule fois
+void Simulateur::ajouterVehiculesAleatoires(double vitesseMin, double vitesseMax) {
     static bool rngInit = false;
     if (!rngInit) {
         std::srand(static_cast<unsigned>(std::time(nullptr)));
@@ -33,33 +27,27 @@ void Simulateur::ajouterVehiculesAleatoires(
     }
 
     std::vector<long> idsNoeuds;
-    idsNoeuds.reserve(noeudsMap.size());
-    for (const auto& [id, n] : noeudsMap) {
-        idsNoeuds.push_back(id);
-    }
+    for (const auto& [id, n] : noeudsMap) idsNoeuds.push_back(id);
 
-    for (int i = 0; i < nb_vehicule; i++) {
+    vehicules.clear();
+    for (int i = 0; i < nbVehicules; i++) {
         long idNoeud = idsNoeuds[std::rand() % idsNoeuds.size()];
         const Noeud& noeud = noeudsMap.at(idNoeud);
         int rayon = rayonTransmissionAleatoire
-                        ? (std::rand() % (MAX - MIN + 1)) + MIN
+                        ? (std::rand() % (RAYON_MAX - RAYON_MIN + 1)) + RAYON_MIN
                         : rayonTransmission;
         double vitesse = vitesseMin + (std::rand() / (double)RAND_MAX) * (vitesseMax - vitesseMin);
         double direction = std::rand() % 360;
 
         Vehicule v(i + 1, rayon, noeud.getLatitude(), noeud.getLongitude(), vitesse, direction);
-
-        // 🟢 Correction : il faut lui dire sur quel nœud il démarre
         v.setNoeudDepart(idNoeud);
 
         vehicules.push_back(v);
     }
 
     graphe.majGraphe(vehicules);
-
-    std::cout << nb_vehicule << " véhicules ajoutés aléatoirement au graphe." << std::endl;
+    std::cout << nbVehicules << " véhicules ajoutés aléatoirement au graphe." << std::endl;
 }
-
 
 void Simulateur::update() {
     if (facteurVitesse <= 0.0) return;
@@ -67,13 +55,10 @@ void Simulateur::update() {
     double dt = pasDeTemps * facteurVitesse;
     tempsEcoule += dt;
 
-    for (auto& v : vehicules) {
-        v.avancerSurGraphe(dt, routes);
-    }
+    for (auto& v : vehicules) v.avancerSurGraphe(dt, routes);
 
     graphe.majGraphe(vehicules);
 
-    // 🧪 test temporaire
     static int cpt = 0;
     if (++cpt % 10 == 0) {
         std::cout << "== UPDATE ==\n";
@@ -81,16 +66,9 @@ void Simulateur::update() {
     }
 }
 
-
 void Simulateur::afficherEtat() const {
     std::cout << "=== Temps: " << tempsEcoule << "s ===" << std::endl;
-    for (const auto& v : vehicules) {
-        v.afficherEtat();
-    }
-}
-
-int Simulateur::getNombreVehicules() const {
-    return vehicules.size();
+    for (const auto& v : vehicules) v.afficherEtat();
 }
 
 void Simulateur::reinitialiser() {
@@ -99,21 +77,34 @@ void Simulateur::reinitialiser() {
     tempsEcoule = 0.0;
 }
 
-void Simulateur::setPasDeTemps(double dt) {
-    pasDeTemps = dt;
-}
-
 void Simulateur::lierAuGraphe() {
-
 }
 
-const std::vector<Vehicule>& Simulateur::getVehicules() const {
-    return vehicules;
+void Simulateur::placerVehiculeSurNoeud(int idVehicule, long idNoeud) {
+    if (idVehicule <= 0 || idVehicule > (int)vehicules.size()) return;
+    vehicules[idVehicule-1].setNoeudDepart(idNoeud);
 }
 
-void Simulateur::setFacteurVitesse(double facteur) {
-    facteurVitesse = facteur;
+void Simulateur::mettreAJourNbVehicules(int nouveauNb) {
+    nbVehicules = nouveauNb;
+    ajouterVehiculesAleatoires();
+    graphe.majGraphe(vehicules);
+    std::cout << "Nombre de véhicules mis à jour : " << nbVehicules << std::endl;
 }
-double Simulateur::getFacteurVitesse() const {
-    return facteurVitesse;
-}
+
+
+int Simulateur::getNombreVehicules() const { return vehicules.size(); }
+const std::vector<Vehicule>& Simulateur::getVehicules() const { return vehicules; }
+
+double Simulateur::getFacteurVitesse() const { return facteurVitesse; }
+void Simulateur::setFacteurVitesse(double f) { facteurVitesse = f; }
+
+double Simulateur::getPasDeTemps() const { return pasDeTemps; }
+void Simulateur::setPasDeTemps(double dt) { pasDeTemps = dt; }
+
+int Simulateur::getNbVehicules() const { return nbVehicules; }
+void Simulateur::setNbVehicules(int n) { nbVehicules = n; }
+
+int Simulateur::getRayonTransmission() const { return rayonTransmission; }
+void Simulateur::setRayonTransmission(int r) { rayonTransmission = r; }
+

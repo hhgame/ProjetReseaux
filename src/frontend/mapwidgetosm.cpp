@@ -129,7 +129,7 @@ MapWidgetOSM::MapWidgetOSM(QWidget* parent,Simulateur* s)
         setZoom(zoomLevel - 1);
     });
 
-    voiturePixmap = QPixmap("../ProjetReseaux/voiture.png");
+    voiturePixmap = QPixmap("../../voiture.png");
     if (voiturePixmap.isNull()) {
         qDebug() << "⚠️ Impossible de charger voiture.png";
         // fallback : cercle rouge
