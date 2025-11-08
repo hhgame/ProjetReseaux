@@ -27,6 +27,20 @@ void GrapheRoutier::ajouterNoeud(const Noeud& n) {
 
 void GrapheRoutier::ajouterArete(const Arete& a) {
     aretes.push_back(a);
+
+    Arete* ptr = &aretes.back();
+
+    // Ajouter l'arête au noeud source
+    Noeud* nSource = getNoeudParId(a.getIdSource());
+    if (nSource != nullptr) {
+        nSource->addArete(ptr);
+    }
+
+    // Ajouter l'arête au noeud destination
+    Noeud* nDest = getNoeudParId(a.getIdDestination());
+    if (nDest != nullptr) {
+        nDest->addArete(ptr);
+    }
 }
 
 Noeud* GrapheRoutier::getNoeudParId(long id) const {
