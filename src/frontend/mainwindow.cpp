@@ -1,37 +1,9 @@
 #include "mainwindow.h"
-#include <QVBoxLayout>
-#include <QWidget>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+MainWindow::MainWindow(Simulateur* simulateur, QWidget *parent)
+    : QMainWindow(parent), s(simulateur)
 {
-    // Créer un widget central
-    QWidget* central = new QWidget(this);
-    setCentralWidget(central);
-
-    // Créer le simulateur
-    s = new Simulateur{};
-
-    // Layout vertical
-    QVBoxLayout* layout = new QVBoxLayout(central);
-
-    // Créer la toolbar et connecter ses signaux
-    toolbar = new ToolBar(this);
-    layout->addWidget(toolbar);
-
-    connect(toolbar, &ToolBar::speedChanged, this, &MainWindow::miseAJourVitesse);
-    connect(toolbar, &ToolBar::openParamWindow, this, &MainWindow::ouvrirParametres);
-
-    // Créer le widget OSM
-    mapWidget = new MapWidgetOSM(this, s);
-    mapWidget->setCentre(47.75, 7.34); // Mulhouse
-    mapWidget->setZoom(13);
-    layout->addWidget(mapWidget);
-
-    paramWindow = new ParamWindow(s, nullptr);
-
-    resize(800, 600);
-    show();
+    setupUI();
 }
 
 MainWindow::~MainWindow()
@@ -39,10 +11,9 @@ MainWindow::~MainWindow()
     delete s;
 }
 
-// ===== Slots =====
+// Slots
 void MainWindow::ouvrirParametres()
 {
-    // Affiche la fenêtre ParamWindow
     if (paramWindow) {
         paramWindow->show();
         paramWindow->raise();
@@ -52,7 +23,29 @@ void MainWindow::ouvrirParametres()
 
 void MainWindow::miseAJourVitesse(double facteur)
 {
-    if (s) {
-        s->setFacteurVitesse(facteur);
-    }
+    if (s) s->setFacteurVitesse(facteur);
+}
+
+// Initialisation UI
+void MainWindow::setupUI()
+{
+    QWidget* central = new QWidget(this);
+    setCentralWidget(central);
+
+    QVBoxLayout* layout = new QVBoxLayout(central);
+
+    toolbar = new ToolBar(this);
+    layout->addWidget(toolbar);
+
+    connect(toolbar, &ToolBar::speedChanged, this, &MainWindow::miseAJourVitesse);
+    connect(toolbar, &ToolBar::openParamWindow, this, &MainWindow::ouvrirParametres);
+
+    mapWidget = new MapWidgetOSM(this, s);
+    mapWidget->setCentre(47.75, 7.34);
+    mapWidget->setZoom(13);
+    layout->addWidget(mapWidget);
+
+    paramWindow = new ParamWindow(s, nullptr);
+
+    resize(800, 600);
 }

@@ -17,6 +17,9 @@ private:
     GrapheInterference graphe;
     GrapheRoutier routes;
 
+    // Pré-calcul des IDs de nœuds pour tirage aléatoire
+    std::vector<long> vecteurNoeuds;
+
     double tempsEcoule = 0.0;
     double pasDeTemps = 0.5;       // temps entre updates
     double facteurVitesse = 1.0;   // 1.0 = normal, 2.0 = x2, 0 = pause

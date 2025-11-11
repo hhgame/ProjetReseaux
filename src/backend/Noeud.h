@@ -10,7 +10,7 @@ class Noeud {
     long   id_{0};
     double lat_{0.0};
     double lon_{0.0};
-    std::vector<Arete*> aretesSuiv;
+    std::vector<Arete> aretesSuiv;
 
 public:
     // ✅ constructeur par défaut (évite les soucis avec std::map::operator[])
@@ -23,8 +23,8 @@ public:
     double getLatitude()  const { return lat_; }
     double getLongitude() const { return lon_; }
 
-    void addArete(Arete* a);
-    std::vector<Arete*> getAretesSuivantes() const;
+    void addArete(Arete a);
+    std::vector<Arete> getAretesSuivantes() const;
 
     void afficherInfos() const {
         std::cout << "Noeud " << id_ << " (" << lat_ << ", " << lon_ << ")\n";

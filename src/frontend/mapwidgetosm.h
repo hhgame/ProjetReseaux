@@ -156,6 +156,19 @@ private slots:
 
 private:
 
+    /** Répertoire du cache actuel */
+    QString cacheDir = "../projetReseaux/cache_tiles";
+
+    /** Optimisation de l'affichage des véhicules */
+    struct VehiculeData {
+        double lat;
+        double lon;
+        double direction;
+    };
+    std::vector<VehiculeData> vehiculesData;
+
+    QHash<int, QPixmap> voiturePixmapCache;
+
     /** Gestionnaire de téléchargement */
     QNetworkAccessManager* networkManager;
 
@@ -240,6 +253,11 @@ private:
      * Contrainte le centre pour rester sur le bassin mulhousien
      */
     void constrainCenter();
+
+    /**
+     * Obtenir le QPixmap de chaque véhicule
+     */
+    QPixmap getVehiculePixmap(double angle);
 };
 
 

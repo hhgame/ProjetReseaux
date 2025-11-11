@@ -33,13 +33,13 @@ void GrapheRoutier::ajouterArete(const Arete& a) {
     // Ajouter l'arête au noeud source
     Noeud* nSource = getNoeudParId(a.getIdSource());
     if (nSource != nullptr) {
-        nSource->addArete(ptr);
+        nSource->addArete(*ptr);
     }
 
     // Ajouter l'arête au noeud destination
     Noeud* nDest = getNoeudParId(a.getIdDestination());
     if (nDest != nullptr) {
-        nDest->addArete(ptr);
+        nDest->addArete(*ptr);
     }
 }
 
@@ -83,10 +83,11 @@ bool GrapheRoutier::chargerDepuisOSM(const std::string& cheminFichier)
 
     QXmlStreamReader xml(&file);
 
-    std::unordered_map<long, Noeud> noeudsTmp; // nœuds valides dans la zone
+    std::unordered_map<long, Noeud> noeudsTmp; // tous les nœuds valides dans la zone
     std::unordered_set<long> noeudsUtilises;   // nœuds effectivement reliés à une route
+    std::vector<Arete> aretesTmp;              // stocker temporairement les arêtes
 
-    // 1️⃣ Lire TOUS les nœuds, mais ne pas les ajouter encore
+    // 1️⃣ Lire tous les nœuds
     while (!xml.atEnd() && !xml.hasError()) {
         xml.readNext();
         if (xml.isStartElement() && xml.name() == "node") {
@@ -105,10 +106,9 @@ bool GrapheRoutier::chargerDepuisOSM(const std::string& cheminFichier)
     xml.clear();
     xml.setDevice(&file);
 
-    // 2️⃣ Lire les ways et construire les arêtes uniquement pour les routes
+    // 2️⃣ Lire les ways et stocker les arêtes
     while (!xml.atEnd() && !xml.hasError()) {
         xml.readNext();
-
         if (xml.isStartElement() && xml.name() == "way") {
             std::vector<long> refs;
             bool isHighway = false;
@@ -121,9 +121,7 @@ bool GrapheRoutier::chargerDepuisOSM(const std::string& cheminFichier)
                         refs.push_back(ref);
                     } else if (xml.name() == "tag") {
                         QString key = xml.attributes().value("k").toString();
-                        if (key == "highway") {
-                            isHighway = true;
-                        }
+                        if (key == "highway") isHighway = true;
                     }
                 }
             }
@@ -132,17 +130,19 @@ bool GrapheRoutier::chargerDepuisOSM(const std::string& cheminFichier)
 
             long prev = -1;
             for (long ref : refs) {
-                if (noeudsTmp.find(ref) == noeudsTmp.end()) continue; // hors zone
+                if (noeudsTmp.find(ref) == noeudsTmp.end()) continue;
 
                 if (prev != -1 && noeudsTmp.count(prev) && noeudsTmp.count(ref)) {
                     const Noeud& a = noeudsTmp[prev];
                     const Noeud& b = noeudsTmp[ref];
-
                     double d = calculerDistance(a, b);
-                    ajouterArete(Arete(prev, ref, d));
-                    if (!estOriente)
-                        ajouterArete(Arete(ref, prev, d));
 
+                    // Stocker temporairement les arêtes
+                    aretesTmp.emplace_back(prev, ref, d);
+                    if (!estOriente)
+                        aretesTmp.emplace_back(ref, prev, d);
+
+                    // Marquer les nœuds utilisés
                     noeudsUtilises.insert(prev);
                     noeudsUtilises.insert(ref);
                 }
@@ -151,9 +151,14 @@ bool GrapheRoutier::chargerDepuisOSM(const std::string& cheminFichier)
         }
     }
 
-    // 3️⃣ Maintenant, ajouter uniquement les nœuds utilisés
+    // 3️⃣ Ajouter les nœuds utilisés dans le graphe
     for (long id : noeudsUtilises) {
         ajouterNoeud(noeudsTmp.at(id));
+    }
+
+    // 4️⃣ Ajouter les arêtes et lier aux nœuds
+    for (const Arete& a : aretesTmp) {
+        ajouterArete(a); // ajouterArete mettra à jour aretesSuiv des nœuds
     }
 
     if (xml.hasError()) {
@@ -167,6 +172,7 @@ bool GrapheRoutier::chargerDepuisOSM(const std::string& cheminFichier)
     std::cout << "✅ " << noeudsUtilises.size() << " nœuds routiers chargés (isolés exclus)." << std::endl;
     return true;
 }
+
 
 
 const std::unordered_map<long, Noeud>& GrapheRoutier::getNoeuds() const {
@@ -183,24 +189,14 @@ bool GrapheRoutier::get_estOriente() const {
 
 std::vector<long> GrapheRoutier::getVoisins(long id) const {
     std::vector<long> voisins;
-    for (const auto& a : aretes) {
-        if (a.getIdSource() == id) {
-            voisins.push_back(a.getIdDestination());
-        } else if (a.getIdDestination() == id) {
-            voisins.push_back(a.getIdSource());
-        }
+    for (const auto& a : getNoeudParId(id)->getAretesSuivantes()) {
+        long idVoisin = a.getIdDestination() != id ? a.getIdDestination() : a.getIdSource();
+        voisins.push_back(idVoisin);
     }
-    // éliminer doublons éventuels
-    std::sort(voisins.begin(), voisins.end());
-    voisins.erase(std::unique(voisins.begin(), voisins.end()), voisins.end());
     return voisins;
 }
 
 int GrapheRoutier::degreNoeud(long id) const {
-    int c = 0;
-    for (const auto& a : aretes) {
-        if (a.getIdSource() == id || a.getIdDestination() == id) ++c;
-    }
-    return c;
+    return getNoeudParId(id)->getAretesSuivantes().size();
 }
 
