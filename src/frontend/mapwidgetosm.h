@@ -157,7 +157,7 @@ private slots:
 private:
 
     /** Répertoire du cache actuel */
-    QString cacheDir = "../projetReseaux/cache_tiles";
+    QString cacheDir = "../../cache_tiles";
 
     /** Optimisation de l'affichage des véhicules */
     struct VehiculeData {
