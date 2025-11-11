@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Qt6 MinGW
 # ------------------------------
 set(CMAKE_PREFIX_PATH "E:/Qt/6.9.3/mingw_64")
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets OpenGL Network)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets OpenGL Network Concurrent)
 
 
 # ------------------------------
@@ -39,7 +39,6 @@ add_executable(${PROJECT_NAME}
     src/frontend/paramwindow.h src/frontend/paramwindow.cpp
 
 )
-
 # ------------------------------
 # Liaisons bibliothèques
 # ------------------------------
@@ -49,5 +48,6 @@ target_link_libraries(${PROJECT_NAME}
     Qt6::Widgets
     Qt6::OpenGL
     Qt6::Network
+    Qt6::Concurrent
 )
 
