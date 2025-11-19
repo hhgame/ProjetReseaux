@@ -2,6 +2,7 @@
 #include <iostream>
 #include <random>
 #include <ctime>
+#include "grapheinterference.h"
 
 #define RAYON_MIN 50
 #define RAYON_MAX 200
@@ -15,7 +16,8 @@ Simulateur::Simulateur() {
     for (const auto& [id, n] : routes.getNoeuds())
         vecteurNoeuds.push_back(id);
 
-    ajouterVehiculesAleatoires(2.0, 10.0);
+    graphe = GrapheInterference();
+    ajouterVehiculesAleatoires(20.0, 100.0);
 }
 
 void Simulateur::ajouterVehiculesAleatoires(double vitesseMin, double vitesseMax) {
@@ -63,7 +65,9 @@ void Simulateur::update() {
         v.avancerSurGraphe(dt, routes);
 
     // Mise à jour du graphe (positions)
-    graphe.majGraphe(vehicules);
+    if(afficherGrapheInterference) {
+        graphe.majGraphe(vehicules);
+    }
 }
 
 void Simulateur::afficherEtat() const {
@@ -108,3 +112,7 @@ void Simulateur::setNbVehicules(int n) { nbVehicules = n; }
 
 int Simulateur::getRayonTransmission() const { return rayonTransmission; }
 void Simulateur::setRayonTransmission(int r) { rayonTransmission = r; }
+
+bool Simulateur::getAfficheRayonTransmission() const { return afficherRayonTransmission; }
+bool Simulateur::getAfficheGrapheInterference() const { return afficherGrapheInterference; }
+std::vector<LienCommunication*> Simulateur::getLiens() const { return graphe.getLiens(); }

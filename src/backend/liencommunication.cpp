@@ -1,22 +1,23 @@
 #include "LienCommunication.h"
 #include <iostream>
 
+
 LienCommunication::LienCommunication()
-    : idVehiculeA(-1), idVehiculeB(-1), distance(0.0)
+    : vehiculeA({-1,-1}), vehiculeB({-1,-1}), distance(0.0)
 {}
 
-LienCommunication::LienCommunication(int idA, int idB, double dist)
-    : idVehiculeA(idA), idVehiculeB(idB), distance(dist)
+LienCommunication::LienCommunication(vehiculeOpti idA, vehiculeOpti idB, double dist)
+    : vehiculeA(idA), vehiculeB(idB), distance(dist)
 {}
 
-int LienCommunication::getIdVehiculeA() const
+vehiculeOpti LienCommunication::getVehiculeA() const
 {
-    return idVehiculeA;
+    return vehiculeA;
 }
 
-int LienCommunication::getIdVehiculeB() const
+vehiculeOpti LienCommunication::getVehiculeB() const
 {
-    return idVehiculeB;
+    return vehiculeB;
 }
 
 double LienCommunication::getDistance() const
@@ -26,13 +27,13 @@ double LienCommunication::getDistance() const
 
 bool LienCommunication::estEgale(const LienCommunication& autre) const
 {
-    return ((idVehiculeA == autre.idVehiculeA && idVehiculeB == autre.idVehiculeB) ||
-            (idVehiculeA == autre.idVehiculeB && idVehiculeB == autre.idVehiculeA));
+    return (((vehiculeA.lat == autre.vehiculeA.lat && vehiculeA.lon == autre.vehiculeA.lon) && (vehiculeB.lat == autre.vehiculeB.lat && vehiculeB.lon == autre.vehiculeB.lon) ||
+            ((vehiculeA.lat == autre.vehiculeB.lat && vehiculeA.lon == autre.vehiculeB.lon) && (vehiculeB.lat == autre.vehiculeA.lat && vehiculeB.lon == autre.vehiculeA.lon))));
 }
 
 void LienCommunication::afficherInfos() const
 {
-    std::cout << "Lien : Vehicule " << idVehiculeA
-              << " <-> Vehicule " << idVehiculeB
+    std::cout << "Lien : Vehicule " << vehiculeA.lat <<" , "<<vehiculeA.lon
+              << " <-> Vehicule " << vehiculeB.lat << " , "<<vehiculeB.lon
               << " (distance = " << distance << " m)" << std::endl;
 }

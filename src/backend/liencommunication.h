@@ -1,6 +1,11 @@
 #ifndef LIENCOMMUNICATION_H
 #define LIENCOMMUNICATION_H
 
+struct vehiculeOpti {
+    double lat;
+    double lon;
+};
+
 /**
  * Représente une connexion entre deux véhicules.
  */
@@ -8,10 +13,10 @@ class LienCommunication
 {
 private:
     // Id du premier véhicule
-    int idVehiculeA;
+    vehiculeOpti vehiculeA;
 
     // Id du deuxième véhicule
-    int idVehiculeB;
+    vehiculeOpti vehiculeB;
 
     // Distance entre les véhicules
     double distance;
@@ -29,17 +34,17 @@ public:
      * @param idB ID du second véhicule
      * @param dist Distance entre les deux véhicules (mètres)
      */
-    LienCommunication(int idA, int idB, double dist);
+    LienCommunication(vehiculeOpti A, vehiculeOpti B, double dist);
 
     /**
      * Retourne l'ID du premier véhicule
      */
-    int getIdVehiculeA() const;
+    vehiculeOpti getVehiculeA() const;
 
     /**
      * Retourne l'ID du second véhicule
      */
-    int getIdVehiculeB() const;
+    vehiculeOpti getVehiculeB() const;
 
     /**
      * Retourne la distance entre les deux véhicules

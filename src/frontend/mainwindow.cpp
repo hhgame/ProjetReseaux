@@ -4,6 +4,7 @@ MainWindow::MainWindow(Simulateur* simulateur, QWidget *parent)
     : QMainWindow(parent), s(simulateur)
 {
     setupUI();
+    showMaximized();
 }
 
 MainWindow::~MainWindow()
@@ -15,7 +16,7 @@ MainWindow::~MainWindow()
 void MainWindow::ouvrirParametres()
 {
     if (paramWindow) {
-        paramWindow->show();
+        paramWindow->showMaximized();
         paramWindow->raise();
         paramWindow->activateWindow();
     }

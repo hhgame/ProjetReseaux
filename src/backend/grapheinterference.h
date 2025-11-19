@@ -2,52 +2,67 @@
 #define GRAPHEINTERFERENCE_H
 
 #include <vector>
+#include <unordered_map>
 #include "Vehicule.h"
 #include "LienCommunication.h"
 
 /**
- * La classe GrapheInterference gère le graphe dynamique des communications V2V.
- *
- * À chaque cycle de simulation, elle détermine quels véhicules peuvent communiquer
- * entre eux selon leur position et leur rayon de transmission.
+ * Classe qui gère le graphe d'interférences entre véhicules.
+ * Optimisée pour éviter O(n²) grâce à une grille spatiale.
  */
 class GrapheInterference
 {
 private:
-    // Liste des liens de communication actuel
+    /** Liste des liens de communication actifs */
     std::vector<LienCommunication*> liens;
 
-    // Si un véhicule n'a pas de rayon de transmission valeur par défaut
+    /** Rayon de transmission par défaut si non défini dans un véhicule */
     double rayonTransmissionDefaut;
+
+    /** Cellule d'indexation spatiale */
+    struct Cell {
+        std::vector<size_t> vehicules; // indices des véhicules dans cette cellule
+    };
+
+    /** Grille spatiale : hash → cellule */
+    std::unordered_map<long long, Cell> grille;
+
+    /**
+     * Génère un hash unique pour une cellule de la grille
+     * @param cx Coordonnée x de la cellule
+     * @param cy Coordonnée y de la cellule
+     * @return hash unique
+     */
+    long long hashCell(int cx, int cy) const;
 
 public:
     /**
-     * Constructeur par défaut
-     * @param rayonDefaut Rayon de transmission par défaut (en mètres)
+     * Constructeur
+     * @param rayonDefaut Rayon par défaut pour les véhicules
      */
     GrapheInterference(double rayonDefaut = 150.0);
 
     /**
-     * Met à jour le graphe d'interférences selon la position des véhicules.
-     * @param vehicules Liste actuelle des véhicules dans la simulation.
+     * Met à jour le graphe d'interférence en fonction des positions des véhicules.
+     * @param vehicules Vecteur de véhicules à prendre en compte
      */
     void majGraphe(const std::vector<Vehicule>& vehicules);
 
     /**
-     * Retourne la liste actuelle des liens de communication.
+     * Retourne tous les liens actifs
+     * @return vecteur de pointeurs vers les liens
      */
     std::vector<LienCommunication*> getLiens() const;
 
     /**
-     * ATTENTION CECI EST UNE METHODE DE DEBUGAGE
-     * Affiche la liste des connexions dans la console.
+     * Affiche le graphe dans la console
      */
     void afficherGraphe() const;
 
     /**
-     * Supprime tous les liens actuels.
+     * Vide le graphe et libère la mémoire des liens
      */
     void clear();
 };
 
-#endif // GRAPHEINTERFERENCE_H
+#endif

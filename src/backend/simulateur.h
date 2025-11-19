@@ -5,6 +5,7 @@
 #include "vehicule.h"
 #include "grapheinterference.h"
 #include "GrapheRoutier.h"
+#include "liencommunication.h"
 
 class Simulateur {
 private:
@@ -13,6 +14,8 @@ private:
     bool rayonTransmissionAleatoire = true;
     int rayonTransmission = 100;
     int nbVehicules = 100;
+    bool afficherRayonTransmission = true;
+    bool afficherGrapheInterference = true;
 
     GrapheInterference graphe;
     GrapheRoutier routes;
@@ -22,7 +25,8 @@ private:
 
     double tempsEcoule = 0.0;
     double pasDeTemps = 0.5;       // temps entre updates
-    double facteurVitesse = 1.0;   // 1.0 = normal, 2.0 = x2, 0 = pause
+    double facteurVitesse = 0.25;   // 1.0 = normal, 2.0 = x2, 0 = pause
+
 
 public:
     Simulateur();
@@ -37,6 +41,10 @@ public:
     // Accesseurs
     int getNombreVehicules() const;
     const std::vector<Vehicule>& getVehicules() const;
+
+    bool getAfficheRayonTransmission() const;
+    bool getAfficheGrapheInterference() const;
+    std::vector<LienCommunication*> getLiens() const;
 
     double getFacteurVitesse() const;
     void setFacteurVitesse(double facteur);

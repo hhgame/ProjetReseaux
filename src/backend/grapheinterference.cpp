@@ -2,55 +2,134 @@
 #include <cmath>
 #include <iostream>
 
-
 GrapheInterference::GrapheInterference(double rayonDefaut)
     : rayonTransmissionDefaut(rayonDefaut)
 {
     liens.clear();
 }
 
+/**
+ * Convertit un degré en radian
+ */
+static double deg2rad(double deg) { return deg * M_PI / 180.0; }
+
+/**
+ * Distance en mètres entre deux points lat/lon
+ */
+static double distanceEnMetres(double lat1, double lon1, double lat2, double lon2) {
+    constexpr double R = 6371000.0; // rayon de la Terre en mètres
+    double dLat = deg2rad(lat2 - lat1);
+    double dLon = deg2rad(lon2 - lon1);
+    double a = sin(dLat/2) * sin(dLat/2) +
+               cos(deg2rad(lat1)) * cos(deg2rad(lat2)) *
+                   sin(dLon/2) * sin(dLon/2);
+    double c = 2 * atan2(sqrt(a), sqrt(1.0 - a));
+    return R * c;
+}
+
+/**
+ * Hash unique pour une cellule de la grille
+ */
+long long GrapheInterference::hashCell(int cx, int cy) const
+{
+    return ((long long)cx << 32) ^ (long long)cy;
+}
+
+/**
+ * Mise à jour du graphe avec optimisation par grille spatiale
+ */
 void GrapheInterference::majGraphe(const std::vector<Vehicule>& vehicules)
 {
-    clear();
+    clear();    // Nettoie les anciens liens
+    grille.clear();
 
+    if (vehicules.empty()) return;
+
+    // 1️⃣ Taille d'une cellule = rayon de transmission par défaut
+    double cellSize = rayonTransmissionDefaut;
+
+    // 2️⃣ Indexation spatiale des véhicules (O(n))
     for (size_t i = 0; i < vehicules.size(); ++i)
     {
-        for (size_t j = i + 1; j < vehicules.size(); ++j)
+        // Conversion latitude → pseudo-mètre pour grille
+        double lat = vehicules[i].getX();
+        double lon = vehicules[i].getY();
+        double mLat = lat * 111320.0; // approx. 1° lat ≈ 111.32 km
+        double mLon = lon * 111320.0 * cos(deg2rad(lat)); // correction longitude
+
+        int cx = static_cast<int>(std::floor(mLon / cellSize));
+        int cy = static_cast<int>(std::floor(mLat / cellSize));
+
+        grille[hashCell(cx, cy)].vehicules.push_back(i);
+    }
+
+    // 3️⃣ Recherche des voisins proches (O(n) en moyenne)
+    for (const auto& entry : grille)
+    {
+        long long cellHash = entry.first;
+        int cx = cellHash >> 32;
+        int cy = (int)(cellHash & 0xFFFFFFFF);
+
+        const auto& cellVeh = entry.second.vehicules;
+
+        // On regarde les cellules voisines (9 cellules)
+        for (int ox = -1; ox <= 1; ++ox)
         {
-            double xA = vehicules[i].getX();
-            double yA = vehicules[i].getY();
-            double xB = vehicules[j].getX();
-            double yB = vehicules[j].getY();
-
-            double dx = xA - xB;
-            double dy = yA - yB;
-            double distance = std::sqrt(dx * dx + dy * dy);
-
-            double rayonA = vehicules[i].getRayonTransmission();
-            double rayonB = vehicules[j].getRayonTransmission();
-
-            if (rayonA <= 0) rayonA = rayonTransmissionDefaut;
-            if (rayonB <= 0) rayonB = rayonTransmissionDefaut;
-
-            if (distance <= (rayonA + rayonB))
+            for (int oy = -1; oy <= 1; ++oy)
             {
-                LienCommunication* lien = new LienCommunication{
-                    vehicules[i].getId(),
-                    vehicules[j].getId(),
-                    distance
-                };
+                auto it = grille.find(hashCell(cx + ox, cy + oy));
+                if (it == grille.end()) continue;
 
-                liens.push_back(lien);
+                const auto& voisins = it->second.vehicules;
+
+                // Comparaison chaque véhicule de la cellule avec ses voisins
+                for (size_t i : cellVeh)
+                {
+                    for (size_t j : voisins)
+                    {
+                        if (i >= j) continue; // éviter doublons
+
+                        double latA = vehicules[i].getX();
+                        double lonA = vehicules[i].getY();
+                        double latB = vehicules[j].getX();
+                        double lonB = vehicules[j].getY();
+
+                        // ✅ Distance réelle en mètres
+                        double distance = distanceEnMetres(latA, lonA, latB, lonB);
+
+                        double rayonA = vehicules[i].getRayonTransmission();
+                        double rayonB = vehicules[j].getRayonTransmission();
+
+                        if (rayonA <= 0) rayonA = rayonTransmissionDefaut;
+                        if (rayonB <= 0) rayonB = rayonTransmissionDefaut;
+
+                        // Si distance < rayon total, créer un lien
+                        if (distance <= (rayonA + rayonB))
+                        {
+                            liens.push_back(new LienCommunication{
+                                {latA, lonA},
+                                {latB, lonB},
+                                distance
+                            });
+                        }
+                    }
+                }
             }
         }
     }
 }
 
+/**
+ * Retourne les liens du graphe
+ */
 std::vector<LienCommunication*> GrapheInterference::getLiens() const
 {
     return liens;
 }
 
+/**
+ * Affiche le graphe dans la console
+ */
 void GrapheInterference::afficherGraphe() const
 {
     if (liens.empty())
@@ -61,16 +140,17 @@ void GrapheInterference::afficherGraphe() const
 
     std::cout << "==== Connexions V2V actives ====" << std::endl;
     for (const auto& lien : liens)
-    {
         lien->afficherInfos();
-    }
     std::cout << "================================" << std::endl;
 }
 
+/**
+ * Vide le graphe et libère la mémoire
+ */
 void GrapheInterference::clear()
 {
-    for(size_t i = 0; i<liens.size(); i++) {
-        delete liens[i];
-    }
+    for (auto* lien : liens)
+        delete lien;
+
     liens.clear();
 }
