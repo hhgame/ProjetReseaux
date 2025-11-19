@@ -104,17 +104,20 @@ void Vehicule::avancerSurGraphe(double dt, const GrapheRoutier& graphe) {
         const auto& voisins = graphe.getVoisins(noeudActuelId);
         if (voisins.empty()) return;
 
-        // Choix aléatoire rapide sans vecteur temporaire
-        long choix = -1;
-        for (size_t i = 0; i < voisins.size(); ++i) {
-            if (voisins[i] != dernierNoeudId) {
-                choix = voisins[i];
-                break; // premier candidat valide
-            }
+        std::vector<long> candidats;
+
+        // Exclure le dernier noeud (empêche de faire demi-tour constant)
+        for (long v : voisins) {
+            if (v != dernierNoeudId) candidats.push_back(v);
         }
-        if (choix == -1) choix = (dernierNoeudId != -1) ? dernierNoeudId : voisins[0];
-        noeudDestinationId = choix;
+
+        // S'il n'y a aucun autre choix → obligé de retourner en arrière
+        if (candidats.empty()) candidats = voisins;
+
+        // Choisir un voisin aléatoire
+        noeudDestinationId = candidats[std::rand() % candidats.size()];
     }
+
 
     // 3️⃣ Nœud destination
     const Noeud* dst = graphe.getNoeudParId(noeudDestinationId);

@@ -219,9 +219,15 @@ void MapWidgetOSM::loadTiles()
     int cx = static_cast<int>(centerTile.x());
     int cy = static_cast<int>(centerTile.y());
 
-    int range = 1; // 3x3 tuiles
-    for (int dx = -range; dx <= range; ++dx) {
-        for (int dy = -range; dy <= range; ++dy) {
+    // Nombre de tuiles nécessaires pour couvrir tout le widget
+    int tilesX = (width() + tileSize - 1) / tileSize; // arrondi supérieur
+    int tilesY = (height() + tileSize - 1) / tileSize;
+
+    int rangeX = tilesX / 2 + 2;
+    int rangeY = tilesY / 2 + 2;
+
+    for (int dx = -rangeX; dx <= rangeX; ++dx) {
+        for (int dy = -rangeY; dy <= rangeY; ++dy) {
             int x = cx + dx;
             int y = cy + dy;
             QString key = tileKey(x, y, zoomLevel);
@@ -230,11 +236,10 @@ void MapWidgetOSM::loadTiles()
             QString cacheFile = QString("%1/%2_%3_%4.png").arg(cacheDir).arg(zoomLevel).arg(x).arg(y);
 
             if (QFile::exists(cacheFile)) {
-                // Charger depuis le cache
                 QPixmap pix;
                 if (pix.load(cacheFile)) {
                     tiles.insert(key, {x, y, zoomLevel, pix});
-                    continue; // pas besoin de télécharger
+                    continue;
                 }
             }
 
@@ -250,6 +255,7 @@ void MapWidgetOSM::loadTiles()
         }
     }
 }
+
 
 
 void MapWidgetOSM::tileDownloaded(QNetworkReply* reply)
@@ -340,13 +346,53 @@ void MapWidgetOSM::paintEvent(QPaintEvent*)
                            ov.getPixmap());
     }
 
-    // 🔹 Dessin des véhicules
+    // 🔹 Dessin des véhicules + rayon de transmission réel
     for (const auto& v : vehiculesData) {
+
         QPointF pos = latLonToPixel(v.lat, v.lon);
+
+        //
+        // 1️⃣ Dessin du rayon de transmission (réel → pixel)
+        //
+        if(simulateur->getAfficheRayonTransmission()) {
+            int rayonMetres = v.rayonT;   // <<< mets ici ton rayon réel si variable
+
+            double mpp = metersPerPixel(v.lat, zoomLevel, tileSize); // mètres/pixel
+            double rpx = rayonMetres / mpp;                          // rayon en pixels
+
+            painter.setPen(QPen(QColor(0, 150, 255, 160), 2));
+            painter.setBrush(QBrush(QColor(0, 150, 255, 50)));
+
+            painter.drawEllipse(
+                QPointF(pos.x(), pos.y()),
+                rpx,  // rayon horizontal
+                rpx   // rayon vertical
+                );
+        }
+
+        //
+        // 2️⃣ Dessin du véhicule
+        //
         QPixmap pix = getVehiculePixmap(v.direction);
         painter.drawPixmap(pos.x() - pix.width()/2,
                            pos.y() - pix.height()/2,
-                           pix);
+                                                      pix);
+    }
+
+    // Dessin du graphe des interférences
+    if(simulateur->getAfficheGrapheInterference()) {
+        for(const auto& lien : simulateur->getLiens()) {
+            QPointF p1 = latLonToPixel(lien->getVehiculeA().lat, lien->getVehiculeA().lon);
+            QPointF p2 = latLonToPixel(lien->getVehiculeB().lat, lien->getVehiculeB().lon);
+
+            QPen pen(Qt::black);
+            painter.setPen(pen);
+
+            // Dessiner la ligne entre les deux points
+            painter.drawLine(p1, p2);
+
+        }
+
     }
 }
 
@@ -382,18 +428,16 @@ void MapWidgetOSM::wheelEvent(QWheelEvent* event)
         return;
 
     QPointF mousePos = event->position();
-    QPointF before = latLonFromPixel(mousePos);
+    QPointF mouseLatLonBefore = latLonFromPixel(mousePos);
 
     zoomLevel = newZoom;
-    loadTiles();
 
-    QPointF after = latLonFromPixel(mousePos);
+    QPointF mouseLatLonAfter = latLonFromPixel(mousePos); // avec le nouveau zoom
+    centerLat += (mouseLatLonBefore.y() - mouseLatLonAfter.y());
+    centerLon += (mouseLatLonBefore.x() - mouseLatLonAfter.x());
 
-    centerLat += (before.y() - after.y());
-    centerLon += (before.x() - after.x());
     constrainCenter();
-
-
+    loadTiles();
     update();
 }
 
@@ -410,13 +454,20 @@ void MapWidgetOSM::mouseMoveEvent(QMouseEvent* event)
         QPoint delta = event->pos() - lastMousePos;
         double factor = 1.0 / (tileSize * qPow(2, zoomLevel));
 
+        QPointF oldCenterTile = latLonToTileXY(centerLat, centerLon, zoomLevel);
         centerLat += delta.y() * factor * 360.0 / M_PI;
         centerLon -= delta.x() * factor * 360.0 / M_PI;
-
         constrainCenter();
+        QPointF newCenterTile = latLonToTileXY(centerLat, centerLon, zoomLevel);
+
+        if (qAbs(newCenterTile.x() - oldCenterTile.x()) >= 1 || qAbs(newCenterTile.y() - oldCenterTile.y()) >= 1) {
+            loadTiles();
+        }
+
         lastMousePos = event->pos();
         loadTiles();
         update();
+
     }
 }
 
@@ -442,7 +493,7 @@ void MapWidgetOSM::updateVehicules()
     vehiculesData.reserve(vehicules.size());
 
     for (const auto& v : vehicules) {
-        vehiculesData.push_back({v.getX(), v.getY(), v.getDirection()});
+        vehiculesData.push_back({v.getX(), v.getY(), v.getDirection(), v.getRayonTransmission()});
     }
 
     update(); // redessine la carte
@@ -468,3 +519,9 @@ QPixmap MapWidgetOSM::getVehiculePixmap(double angle)
     voiturePixmapCache[a] = rotated;
     return rotated;
 }
+
+double MapWidgetOSM::metersPerPixel(double lat, int zoom, int tileSize) {
+    double latRad = qDegreesToRadians(lat);
+    return cos(latRad) * 2.0 * M_PI * 6378137.0 / (tileSize * pow(2.0, zoom));
+}
+

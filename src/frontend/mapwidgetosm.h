@@ -164,6 +164,7 @@ private:
         double lat;
         double lon;
         double direction;
+        int rayonT;
     };
     std::vector<VehiculeData> vehiculesData;
 
@@ -239,6 +240,16 @@ private:
      * @return les coordonnées du point en latitude et longitude
      */
     QPointF latLonFromPixel(const QPointF& pixel);
+
+    /**
+     * Donne le nombre de mètre par pixel
+     * @param lat la latitude
+     * @param zoom le zoom actuel
+     * @param tileSize la taille des tuiles
+     * @return le nombre de mètres par pixel
+     */
+    double metersPerPixel(double lat, int zoom, int tileSize);
+
 
     /**
      * Génère une clé unique pour une tuile
