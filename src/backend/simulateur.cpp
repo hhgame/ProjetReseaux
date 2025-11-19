@@ -26,14 +26,13 @@ void Simulateur::ajouterVehiculesAleatoires(double vitesseMin, double vitesseMax
         return;
     }
 
-    // Générateur aléatoire
     static std::mt19937 rng(static_cast<unsigned>(std::time(nullptr)));
     std::uniform_real_distribution<double> distVitesse(vitesseMin, vitesseMax);
     std::uniform_int_distribution<int> distDirection(0, 359);
     std::uniform_int_distribution<int> distRayon(RAYON_MIN, RAYON_MAX);
 
     vehicules.clear();
-    vehicules.reserve(nbVehicules); // Pré-allocation
+    vehicules.reserve(nbVehicules);
 
     const size_t nNoeuds = vecteurNoeuds.size();
 
@@ -42,17 +41,37 @@ void Simulateur::ajouterVehiculesAleatoires(double vitesseMin, double vitesseMax
         const Noeud* noeud = routes.getNoeudParId(idNoeud);
         if (!noeud) continue;
 
-        int rayon = rayonTransmissionAleatoire ? distRayon(rng) : rayonTransmission;
         double vitesse = distVitesse(rng);
         double direction = distDirection(rng);
+
+        // Rayon selon aléatoire ou fixe
+        int rayon = rayonTransmissionAleatoire ? distRayon(rng) : rayonTransmission;
 
         vehicules.emplace_back(i + 1, rayon, noeud->getLatitude(), noeud->getLongitude(), vitesse, direction);
         vehicules.back().setNoeudDepart(idNoeud);
     }
 
-    graphe.majGraphe(vehicules);
+    // On recalcule les rayons si nécessaire pour tous les véhicules avant de mettre à jour le graphe
+    if (rayonTransmissionAleatoire) {
+        for (auto &veh : vehicules) {
+            veh.setRayonTransmission(distRayon(rng));
+        }
+    } else {
+        for (auto &veh : vehicules) {
+            veh.setRayonTransmission(rayonTransmission);
+        }
+    }
+
+    // Mise à jour du graphe d’interférence
+    if (afficherGrapheInterference) {
+        recalculerGrapheInterference();
+    } else {
+        clearGrapheInterference();
+    }
+
     std::cout << nbVehicules << " véhicules ajoutés aléatoirement au graphe." << std::endl;
 }
+
 
 void Simulateur::update() {
     if (facteurVitesse <= 0.0 || vehicules.empty()) return;
@@ -92,10 +111,39 @@ void Simulateur::placerVehiculeSurNoeud(int idVehicule, long idNoeud) {
 
 void Simulateur::mettreAJourNbVehicules(int nouveauNb) {
     nbVehicules = nouveauNb;
-    ajouterVehiculesAleatoires();
-    graphe.majGraphe(vehicules);
+    ajouterVehiculesAleatoires(20.0, 100.0);
     std::cout << "Nombre de véhicules mis à jour : " << nbVehicules << std::endl;
 }
+
+
+// getters/setters
+bool Simulateur::getRayonAleatoire() const { return rayonTransmissionAleatoire; }
+void Simulateur::setRayonAleatoire(bool v) { rayonTransmissionAleatoire = v; }
+
+void Simulateur::setAfficheRayonTransmission(bool v) { afficherRayonTransmission = v; }
+void Simulateur::setAfficheGrapheInterference(bool v) { afficherGrapheInterference = v; }
+
+// Appliquer un nouveau rayon de transmission à tous les véhicules
+void Simulateur::setRayonTransmission(int r) {
+    rayonTransmission = r;
+    // Si on ne veut pas de rayon aléatoire, appliquer à tous les véhicules
+    if (!rayonTransmissionAleatoire) {
+        for (auto &veh : vehicules) {
+            veh.setRayonTransmission(r);
+        }
+    }
+}
+
+// recalcul graphe d'interference
+void Simulateur::recalculerGrapheInterference() {
+    graphe.clear();
+    graphe.majGraphe(vehicules);
+}
+
+void Simulateur::clearGrapheInterference() {
+    graphe.clear();
+}
+
 
 // Accesseurs
 int Simulateur::getNombreVehicules() const { return vehicules.size(); }
@@ -111,7 +159,6 @@ int Simulateur::getNbVehicules() const { return nbVehicules; }
 void Simulateur::setNbVehicules(int n) { nbVehicules = n; }
 
 int Simulateur::getRayonTransmission() const { return rayonTransmission; }
-void Simulateur::setRayonTransmission(int r) { rayonTransmission = r; }
 
 bool Simulateur::getAfficheRayonTransmission() const { return afficherRayonTransmission; }
 bool Simulateur::getAfficheGrapheInterference() const { return afficherGrapheInterference; }

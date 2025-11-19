@@ -40,6 +40,8 @@ class Vehicule {
 
         void avancerSurGraphe(double dt, const GrapheRoutier& graphe);
         void setNoeudDepart(long id);
+        void setRayonTransmission(int r);
+
 
         // Méthodes
         void avancer(double dt); // déplace le véhicule selon sa vitesse et direction

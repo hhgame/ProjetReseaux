@@ -51,6 +51,16 @@ public:
     double getPasDeTemps() const;
     void setPasDeTemps(double dt);
 
+
+    bool getRayonAleatoire() const;
+    void setRayonAleatoire(bool v);
+
+    void setAfficheRayonTransmission(bool v);
+    void setAfficheGrapheInterference(bool v);
+
+    void recalculerGrapheInterference();
+    void clearGrapheInterference();
+
     int getNbVehicules() const;
     void setNbVehicules(int n);
     int getRayonTransmission() const;

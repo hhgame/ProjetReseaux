@@ -91,6 +91,11 @@ void Vehicule::setNoeudDepart(long id) {
     dernierNoeudId = -1; // départ sans précédent
 }
 
+void Vehicule::setRayonTransmission(int r) {
+    rayonTransmission = r;
+}
+
+
 
 void Vehicule::avancerSurGraphe(double dt, const GrapheRoutier& graphe) {
     const double EPS = 1e-6;

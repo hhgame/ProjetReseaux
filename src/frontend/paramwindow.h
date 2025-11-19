@@ -6,6 +6,7 @@
 #include <QSpinBox>
 #include <QDoubleSpinBox>
 #include <QVBoxLayout>
+#include <QCheckBox>
 #include <QFormLayout>
 #include "../backend/simulateur.h"
 
@@ -27,11 +28,14 @@ private:
     Simulateur *simulation;
 
     QSpinBox *vehiculesBox;
-    QDoubleSpinBox *rayonBox;
-    QDoubleSpinBox *pasBox;
+    QSpinBox *rayonBox;
+    QCheckBox *rayonAleaBox;
+    QCheckBox *afficheRayonBox;
+    QCheckBox *afficheGrapheBox;
 
     QPushButton *validateButton;
     QPushButton *cancelButton;
 };
 
 #endif // PARAMWINDOW_H
+
