@@ -1,0 +1,10 @@
+<map id="ParamWindow::closed" name="ParamWindow::closed">
+<area shape="rect" id="Node000001" title="Signal de fermeture de la fenêtre de paramétrage." alt="" coords="475,31,627,57"/>
+<area shape="rect" id="Node000002" href="$class_param_window.html#a43c82efa444b8281f66f842e4c0949f1" title="Annulation de la saisie des paramètres." alt="" coords="255,5,424,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="457,33,425,31,425,26,462,33"/>
+<area shape="rect" id="Node000004" href="$class_param_window.html#aa8e862b302003525db00cb685d4b7f65" title="Validation des paramètres entrées." alt="" coords="253,56,427,83"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="462,55,428,62,427,56,457,55"/>
+<area shape="rect" id="Node000003" href="$class_param_window.html#a2ecfa70141f0a79cfc6246b87ab8e235" title="Constructeur de la fenêtre de paramétrage." alt="" coords="5,31,205,57"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="237,30,205,36,205,31,242,29"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="234,58,205,57,205,52,240,58"/>
+</map>

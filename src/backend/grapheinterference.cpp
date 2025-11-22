@@ -8,14 +8,10 @@ GrapheInterference::GrapheInterference(double rayonDefaut)
     liens.clear();
 }
 
-/**
- * Convertit un degré en radian
- */
-static double deg2rad(double deg) { return deg * M_PI / 180.0; }
+static double deg2rad(double deg) {
+    return deg * M_PI / 180.0;
+}
 
-/**
- * Distance en mètres entre deux points lat/lon
- */
 static double distanceEnMetres(double lat1, double lon1, double lat2, double lon2) {
     constexpr double R = 6371000.0; // rayon de la Terre en mètres
     double dLat = deg2rad(lat2 - lat1);
@@ -27,25 +23,19 @@ static double distanceEnMetres(double lat1, double lon1, double lat2, double lon
     return R * c;
 }
 
-/**
- * Hash unique pour une cellule de la grille
- */
 long long GrapheInterference::hashCell(int cx, int cy) const
 {
     return ((long long)cx << 32) ^ (long long)cy;
 }
 
-/**
- * Mise à jour du graphe avec optimisation par grille spatiale
- */
 void GrapheInterference::majGraphe(const std::vector<Vehicule>& vehicules)
 {
-    clear();    // Nettoie les anciens liens
+    clear();
     grille.clear();
 
     if (vehicules.empty()) return;
 
-    // 🔹 Calcul du rayon maximum parmi tous les véhicules pour dimensionner la grille
+    // Calcul du rayon maximum parmi tous les véhicules pour dimensionner la grille
     double cellSize = rayonTransmissionDefaut;
     for (const auto& v : vehicules)
     {
@@ -53,13 +43,13 @@ void GrapheInterference::majGraphe(const std::vector<Vehicule>& vehicules)
         if (r > cellSize) cellSize = r;
     }
 
-    // 1️⃣ Indexation spatiale des véhicules
+    // Indexation spatiale des véhicules
     for (size_t i = 0; i < vehicules.size(); ++i)
     {
         double lat = vehicules[i].getX();
         double lon = vehicules[i].getY();
-        double mLat = lat * 111320.0; // conversion approximative lat → m
-        double mLon = lon * 111320.0 * cos(deg2rad(lat)); // correction longitude
+        double mLat = lat * 111320.0;
+        double mLon = lon * 111320.0 * cos(deg2rad(lat));
 
         int cx = static_cast<int>(std::floor(mLon / cellSize));
         int cy = static_cast<int>(std::floor(mLat / cellSize));
@@ -67,7 +57,7 @@ void GrapheInterference::majGraphe(const std::vector<Vehicule>& vehicules)
         grille[hashCell(cx, cy)].vehicules.push_back(i);
     }
 
-    // 2️⃣ Recherche des voisins proches (9 cellules voisines)
+    // Recherche des voisins proches (9 cellules voisines)
     for (const auto& entry : grille)
     {
         long long cellHash = entry.first;

@@ -1,0 +1,5 @@
+<map id="MapWidgetOSM::getVehiculePixmap" name="MapWidgetOSM::getVehiculePixmap">
+<area shape="rect" id="Node000001" title="Obtenir le QPixmap de chaque véhicule." alt="" coords="241,5,433,48"/>
+<area shape="rect" id="Node000002" href="$class_map_widget_o_s_m.html#a79b1b5f36f3b6c8c3b8520be21c3b295" title="Dessine la carte et les overlays." alt="" coords="5,13,193,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="222,27,193,29,193,24,228,26"/>
+</map>

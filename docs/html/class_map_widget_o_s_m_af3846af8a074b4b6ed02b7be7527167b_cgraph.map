@@ -1,0 +1,5 @@
+<map id="MapWidgetOSM::latLonToPixel" name="MapWidgetOSM::latLonToPixel">
+<area shape="rect" id="Node000001" title="Convertit une coordonnée lat/lon en position pixel sur le widget." alt="" coords="5,5,209,32"/>
+<area shape="rect" id="Node000002" href="$class_map_widget_o_s_m.html#af492a05e52146495334f1d8128d78ec4" title="Convertit une coordonnée lat/lon en coordonnées de tuile." alt="" coords="257,5,470,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,16,244,19,239,19,209,21"/>
+</map>

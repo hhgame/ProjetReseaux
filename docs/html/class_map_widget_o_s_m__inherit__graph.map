@@ -1,0 +1,5 @@
+<map id="MapWidgetOSM" name="MapWidgetOSM">
+<area shape="rect" id="Node000001" title="Widget dédié à l&#39;affichage des tuiles OpenStreetMap." alt="" coords="5,80,123,107"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="28,5,100,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="66,46,67,80,61,79,62,50"/>
+</map>

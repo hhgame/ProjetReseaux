@@ -1,0 +1,11 @@
+<map id="ToolBar::ToolBar" name="ToolBar::ToolBar">
+<area shape="rect" id="Node000001" title="Constructeur du widget de toolbar." alt="" coords="5,31,123,57"/>
+<area shape="rect" id="Node000002" href="$class_tool_bar.html#aa0aed955fea663d8f4d629ae52c7b302" title="Sur clique sur le bouton de paramétrage." alt="" coords="172,5,379,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,34,159,32,154,34,123,40"/>
+<area shape="rect" id="Node000004" href="$class_tool_bar.html#acbd000f0f4bee9d78e997745328e5960" title="Sur changement de vitesse sur la slider." alt="" coords="171,56,380,83"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="123,48,158,55,152,55,123,54"/>
+<area shape="rect" id="Node000003" href="$class_tool_bar.html#a87af613a455687417658adf4a8e642fb" title="Signal sur ouverture de la fenêtre de paramétrage." alt="" coords="428,5,614,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="379,16,415,18,410,19,380,21"/>
+<area shape="rect" id="Node000005" href="$class_tool_bar.html#a8d3b41a0fc4869bfd81d4fd36d813242" title="Signal sur changement de vitesse." alt="" coords="441,56,601,83"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="380,67,428,69,423,69,381,72"/>
+</map>

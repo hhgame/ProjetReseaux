@@ -1,0 +1,11 @@
+<map id="ToolBar::openParamWindow" name="ToolBar::openParamWindow">
+<area shape="rect" id="Node000001" title="Signal sur ouverture de la fenêtre de paramétrage." alt="" coords="488,31,674,57"/>
+<area shape="rect" id="Node000002" href="$class_tool_bar.html#aa0aed955fea663d8f4d629ae52c7b302" title="Sur clique sur le bouton de paramétrage." alt="" coords="233,5,440,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="470,33,441,32,441,27,475,33"/>
+<area shape="rect" id="Node000004" href="$class_main_window.html#a3a304253c9e7caeef028f75358bf1fd5" title="Mise en place des composants dans la fenêtre principale." alt="" coords="261,56,412,83"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="475,55,412,64,412,59,470,55"/>
+<area shape="rect" id="Node000003" href="$class_tool_bar.html#a71279d6a64259ade288c0f1611aea962" title="Constructeur du widget de toolbar." alt="" coords="36,5,154,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="214,20,154,21,154,16,219,18"/>
+<area shape="rect" id="Node000005" href="$class_main_window.html#ae0f689c0c008299bf9447f6a70303e8b" title="Constructeur de la fenêtre principale." alt="" coords="5,56,185,83"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="243,69,185,72,185,67,249,69"/>
+</map>

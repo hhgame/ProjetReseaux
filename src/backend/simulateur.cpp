@@ -12,7 +12,7 @@ Simulateur::Simulateur() {
     routes.chargerDepuisOSM(pathMap);
     routes.afficherResume();
 
-    // Préparer la liste des nœuds pour tirage aléatoire
+    // Préparer la liste des noeuds pour tirage aléatoire
     for (const auto& [id, n] : routes.getNoeuds())
         vecteurNoeuds.push_back(id);
 
@@ -68,10 +68,7 @@ void Simulateur::ajouterVehiculesAleatoires(double vitesseMin, double vitesseMax
     } else {
         clearGrapheInterference();
     }
-
-    std::cout << nbVehicules << " véhicules ajoutés aléatoirement au graphe." << std::endl;
 }
-
 
 void Simulateur::update() {
     if (facteurVitesse <= 0.0 || vehicules.empty()) return;
@@ -100,21 +97,10 @@ void Simulateur::reinitialiser() {
     tempsEcoule = 0.0;
 }
 
-void Simulateur::lierAuGraphe() {
-    // Non utilisé actuellement
-}
-
-void Simulateur::placerVehiculeSurNoeud(int idVehicule, long idNoeud) {
-    if (idVehicule <= 0 || idVehicule > (int)vehicules.size()) return;
-    vehicules[idVehicule-1].setNoeudDepart(idNoeud);
-}
-
 void Simulateur::mettreAJourNbVehicules(int nouveauNb) {
     nbVehicules = nouveauNb;
     ajouterVehiculesAleatoires(20.0, 100.0);
-    std::cout << "Nombre de véhicules mis à jour : " << nbVehicules << std::endl;
 }
-
 
 // getters/setters
 bool Simulateur::getRayonAleatoire() const { return rayonTransmissionAleatoire; }
@@ -123,7 +109,6 @@ void Simulateur::setRayonAleatoire(bool v) { rayonTransmissionAleatoire = v; }
 void Simulateur::setAfficheRayonTransmission(bool v) { afficherRayonTransmission = v; }
 void Simulateur::setAfficheGrapheInterference(bool v) { afficherGrapheInterference = v; }
 
-// Appliquer un nouveau rayon de transmission à tous les véhicules
 void Simulateur::setRayonTransmission(int r) {
     rayonTransmission = r;
     // Si on ne veut pas de rayon aléatoire, appliquer à tous les véhicules
@@ -134,7 +119,6 @@ void Simulateur::setRayonTransmission(int r) {
     }
 }
 
-// recalcul graphe d'interference
 void Simulateur::recalculerGrapheInterference() {
     graphe.clear();
     graphe.majGraphe(vehicules);

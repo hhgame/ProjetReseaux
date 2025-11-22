@@ -1,0 +1,5 @@
+<map id="MapWidgetOSM::tileDownloaded" name="MapWidgetOSM::tileDownloaded">
+<area shape="rect" id="Node000001" title="Slot appelé lorsque le téléchargement d&#39;une tuile est terminé" alt="" coords="5,5,220,32"/>
+<area shape="rect" id="Node000002" href="$class_map_widget_o_s_m.html#a72db733576e870e347b4765b8d0db95a" title="Génère une clé unique pour une tuile." alt="" coords="268,5,433,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,16,255,19,249,19,220,21"/>
+</map>

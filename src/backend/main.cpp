@@ -10,13 +10,19 @@
 #include "../frontend/mainwindow.h"
 #include "../backend/simulateur.h"
 
-// Loader circulaire
+/**
+ *  Classe qui représente le chargement circulaire
+ */
 class CircularLoader : public QWidget {
 public:
+    /**
+     * Constructeur du loader
+     * @param parent le QWidget parent (nécessaire à Qt) de base à nullptr
+     */
     explicit CircularLoader(QWidget* parent = nullptr)
         : QWidget(parent), angle(0)
     {
-        setFixedSize(150, 150); // taille du loader
+        setFixedSize(150, 150);
         timer = new QTimer(this);
         QObject::connect(timer, &QTimer::timeout, [this]() {
             angle = (angle + 10) % 360;
@@ -26,6 +32,9 @@ public:
     }
 
 protected:
+    /**
+     * Affichage de la forme du loader
+     */
     void paintEvent(QPaintEvent*) override {
         QPainter painter(this);
         painter.setRenderHint(QPainter::Antialiasing);
@@ -49,14 +58,18 @@ protected:
     }
 
 private:
+    /** Angle du cercle du loader */
     int angle;
+    /** Timer pour le loader */
     QTimer* timer;
 };
 
 int main(int argc, char *argv[])
 {
+    // Création de l'application
     QApplication a(argc, argv);
 
+    // Ajout d'un widget splash
     QWidget splash;
     splash.setWindowFlags(Qt::FramelessWindowHint | Qt::SplashScreen);
     splash.setStyleSheet(

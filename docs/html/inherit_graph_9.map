@@ -1,0 +1,11 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,81,78,108"/>
+<area shape="rect" id="Node000001" href="$class_circular_loader.html" title="Classe qui représente le chargement circulaire." alt="" coords="132,5,237,32"/>
+<area shape="poly" id="edge2_Node000000_Node000001" title=" " alt="" coords="75,71,124,42,151,31,147,34,127,46,78,75"/>
+<area shape="rect" id="Node000002" href="$class_map_widget_o_s_m.html" title="Widget dédié à l&#39;affichage des tuiles OpenStreetMap." alt="" coords="126,56,243,83"/>
+<area shape="poly" id="edge3_Node000000_Node000002" title=" " alt="" coords="92,83,127,78,123,81,94,88"/>
+<area shape="rect" id="Node000003" href="$class_param_window.html" title="Classe représentant la fenêtre des paramètres de simulation." alt="" coords="131,107,238,133"/>
+<area shape="poly" id="edge4_Node000000_Node000003" title=" " alt="" coords="93,101,133,109,128,112,93,106"/>
+<area shape="rect" id="Node000004" href="$class_tool_bar.html" title="Classe représentant la barre des outils pour la simulation." alt="" coords="152,157,217,184"/>
+<area shape="poly" id="edge5_Node000000_Node000004" title=" " alt="" coords="77,114,127,143,154,157,148,158,124,148,76,119"/>
+</map>

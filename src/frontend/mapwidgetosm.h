@@ -11,13 +11,13 @@
 #include <QMouseEvent>
 #include <QPushButton>
 
-// Bassin de Mulhouse approximatif
+/** Bassin de Mulhouse approximatif */
 const double MIN_LAT = 47.66;
 const double MAX_LAT = 47.84;
 const double MIN_LON = 7.207;
 const double MAX_LON = 7.473;
 
-// Limite des zooms
+/** Limite des zooms */
 const int MIN_ZOOM = 12;
 const int MAX_ZOOM = 18;
 
@@ -56,6 +56,9 @@ private:
     QPixmap pixmap;
 };
 
+/**
+ * Classe représentant une surcouche de la carte OSM
+ */
 class Overlay {
 public:
     Overlay(const QPixmap& pix, double lat, double lon);
@@ -205,6 +208,11 @@ private:
 
     /** Simulateur */
     Simulateur* simulateur = nullptr;
+
+    /** Pour le rechargement de la carte */
+    QTimer* loadTimer;
+    /** Pour optimiser le rechargement au zoom */
+    QTimer* zoomTimer;
 
     /**
      *  Méthode de mise à jour des véhicules

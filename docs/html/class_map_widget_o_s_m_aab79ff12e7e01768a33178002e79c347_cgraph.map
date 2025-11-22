@@ -1,0 +1,9 @@
+<map id="MapWidgetOSM::setZoom" name="MapWidgetOSM::setZoom">
+<area shape="rect" id="Node000001" title="Définit le niveau de zoom." alt="" coords="5,31,182,57"/>
+<area shape="rect" id="Node000002" href="$class_map_widget_o_s_m.html#a0b4faed51b47d5dc48270d4cdc2ee168" title="Charge les tuiles autour du centre." alt="" coords="230,31,407,57"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,41,217,44,212,44,182,47"/>
+<area shape="rect" id="Node000003" href="$class_map_widget_o_s_m.html#af492a05e52146495334f1d8128d78ec4" title="Convertit une coordonnée lat/lon en coordonnées de tuile." alt="" coords="455,5,668,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="407,32,442,31,437,32,408,37"/>
+<area shape="rect" id="Node000004" href="$class_map_widget_o_s_m.html#a72db733576e870e347b4765b8d0db95a" title="Génère une clé unique pour une tuile." alt="" coords="479,56,644,83"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="408,51,467,59,461,59,407,56"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="GrapheRoutier::ajouterNoeud" name="GrapheRoutier::ajouterNoeud">
+<area shape="rect" id="Node000001" title="Ajout d&#39;un noeud au graphe routier." alt="" coords="5,5,196,32"/>
+<area shape="rect" id="Node000002" href="$class_noeud.html#a3f8390abb237d1bb1617f8ede6a627df" title="Récupérer l&#39;identifiant du noeud." alt="" coords="244,5,340,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,16,231,19,226,19,196,21"/>
+</map>

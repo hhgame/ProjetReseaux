@@ -1,0 +1,7 @@
+<map id="Noeud::getId" name="Noeud::getId">
+<area shape="rect" id="Node000001" title="Récupérer l&#39;identifiant du noeud." alt="" coords="519,5,615,32"/>
+<area shape="rect" id="Node000002" href="$class_graphe_routier.html#a516937514a058b3f0b25de5e82fe70b9" title="Ajout d&#39;un noeud au graphe routier." alt="" coords="281,5,471,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="501,19,472,21,471,16,506,19"/>
+<area shape="rect" id="Node000003" href="$class_graphe_routier.html#a90f00ea59fb290b3828555333a33d248" title="Chargement du graphe routier depuis un fichier xml format OpenStreetMap." alt="" coords="5,5,233,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="262,19,233,21,233,16,268,19"/>
+</map>

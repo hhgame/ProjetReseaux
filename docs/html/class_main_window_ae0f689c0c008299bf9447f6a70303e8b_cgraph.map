@@ -1,0 +1,13 @@
+<map id="MainWindow::MainWindow" name="MainWindow::MainWindow">
+<area shape="rect" id="Node000001" title="Constructeur de la fenêtre principale." alt="" coords="5,81,185,108"/>
+<area shape="rect" id="Node000002" href="$class_main_window.html#a3a304253c9e7caeef028f75358bf1fd5" title="Mise en place des composants dans la fenêtre principale." alt="" coords="233,81,383,108"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,92,219,94,214,95,185,97"/>
+<area shape="rect" id="Node000003" href="$class_main_window.html#a35ce515b2c60bc1670f9f1252e3814b4" title="Mise&#45;à&#45;jour du facteur vitesse." alt="" coords="431,5,641,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="338,78,430,41,459,36,454,37,432,47,340,83"/>
+<area shape="rect" id="Node000004" href="$class_tool_bar.html#a87af613a455687417658adf4a8e642fb" title="Signal sur ouverture de la fenêtre de paramétrage." alt="" coords="443,56,629,83"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="383,84,430,81,425,82,384,89"/>
+<area shape="rect" id="Node000005" href="$class_main_window.html#a1a2e97039436ff386c52b5b37dfe63f9" title="Ouverture de la fenêtre des paramètres." alt="" coords="434,107,638,133"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="383,100,422,107,417,107,383,106"/>
+<area shape="rect" id="Node000006" href="$class_tool_bar.html#a8d3b41a0fc4869bfd81d4fd36d813242" title="Signal sur changement de vitesse." alt="" coords="456,157,616,184"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="339,106,432,143,459,153,454,153,430,148,338,111"/>
+</map>

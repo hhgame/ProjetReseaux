@@ -1,0 +1,21 @@
+<map id="MapWidgetOSM::latLonToTileXY" name="MapWidgetOSM::latLonToTileXY">
+<area shape="rect" id="Node000001" title="Convertit une coordonnée lat/lon en coordonnées de tuile." alt="" coords="767,97,981,124"/>
+<area shape="rect" id="Node000002" href="$class_map_widget_o_s_m.html#a603a3bebdb5f31800ce9de13c8b3ae96" title="Calcule la latitude et la longitude correspondantes sur la carte." alt="" coords="522,5,713,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="814,92,685,51,686,46,819,92"/>
+<area shape="rect" id="Node000004" href="$class_map_widget_o_s_m.html#af3846af8a074b4b6ed02b7be7527167b" title="Convertit une coordonnée lat/lon en position pixel sur le widget." alt="" coords="516,72,719,99"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="749,99,720,98,720,93,754,98"/>
+<area shape="rect" id="Node000005" href="$class_map_widget_o_s_m.html#a79b1b5f36f3b6c8c3b8520be21c3b295" title="Dessine la carte et les overlays." alt="" coords="278,72,465,99"/>
+<area shape="poly" id="edge10_Node000001_Node000005" title=" " alt="" coords="749,116,637,119,516,113,438,102,438,97,516,108,637,114,754,116"/>
+<area shape="rect" id="Node000006" href="$class_map_widget_o_s_m.html#a0b4faed51b47d5dc48270d4cdc2ee168" title="Charge les tuiles autour du centre." alt="" coords="529,173,706,200"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="814,129,666,175,665,170,809,129"/>
+<area shape="rect" id="Node000003" href="$class_map_widget_o_s_m.html#a860f405264c7dbf97f59e3ecbfd1fb8d" title="Gestion du zoom avec la molette." alt="" coords="275,13,468,40"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="505,27,469,29,468,24,510,26"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="498,86,466,88,465,83,503,85"/>
+<area shape="rect" id="Node000007" href="$class_map_widget_o_s_m.html#a0262d5a020ba5719205d34e0bb5637c7" title="Constructeur du widget OSM." alt="" coords="5,173,227,200"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="532,170,468,164,371,159,275,164,189,175,188,170,274,159,371,153,468,159,537,170"/>
+<area shape="rect" id="Node000008" href="$class_map_widget_o_s_m.html#a9db808599be54b634a91001a283ed757" title="Définit le centre de la carte en latitude/longitude." alt="" coords="280,173,462,200"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="511,187,463,189,463,184,516,186"/>
+<area shape="rect" id="Node000009" href="$class_map_widget_o_s_m.html#aab79ff12e7e01768a33178002e79c347" title="Définit le niveau de zoom." alt="" coords="283,224,460,251"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="537,203,440,226,439,221,532,204"/>
+<area shape="poly" id="edge9_Node000009_Node000007" title=" " alt="" coords="283,221,187,203,187,198,288,220"/>
+</map>

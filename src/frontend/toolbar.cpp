@@ -12,7 +12,7 @@ ToolBar::ToolBar(QWidget *parent)
     connect(speedSlider, &QSlider::valueChanged, this, &ToolBar::onSpeedSliderChanged);
 
     // Label affichant la valeur
-    speedLabel = new QLabel("Vitesse: 1x", this);
+    speedLabel = new QLabel("Vitesse: 0.25x", this);
 
     // Bouton paramètres
     paramButton = new QPushButton("Paramètres", this);
@@ -26,8 +26,6 @@ ToolBar::ToolBar(QWidget *parent)
     setFixedHeight(50);
 }
 
-
-// Slot pour le slider
 void ToolBar::onSpeedSliderChanged(int value)
 {
     double facteurBrut = value * 0.25; // ce que le simulateur utilise réellement
@@ -44,7 +42,6 @@ void ToolBar::onSpeedSliderChanged(int value)
     emit speedChanged(facteurBrut);
 }
 
-// Slot pour le bouton paramètres
 void ToolBar::onParamButtonClicked()
 {
     emit openParamWindow();

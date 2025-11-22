@@ -1,0 +1,23 @@
+<map id="MainWindow" name="MainWindow">
+<area shape="rect" id="Node000001" title="Classe représentant la fenêtre principale." alt="" coords="205,277,301,304"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,187,112,213"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,220,142,251,208,276,203,277,140,256,87,225"/>
+<area shape="rect" id="Node000003" href="$class_simulateur.html" title="Classe représentant le simulateur et les calculs du simulateur." alt="" coords="186,96,270,123"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="204,132,189,152,177,171,171,192,174,212,185,232,201,249,234,277,229,277,197,253,181,235,169,214,165,192,172,169,185,149,200,135"/>
+<area shape="rect" id="Node000006" href="$class_map_widget_o_s_m.html" title="Widget dédié à l&#39;affichage des tuiles OpenStreetMap." alt="" coords="194,187,312,213"/>
+<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="227,136,232,162,245,187,240,186,227,164,224,140"/>
+<area shape="rect" id="Node000009" href="$class_param_window.html" title="Classe représentant la fenêtre des paramètres de simulation." alt="" coords="336,187,442,213"/>
+<area shape="poly" id="edge12_Node000009_Node000003" title=" " alt="" coords="265,128,369,185,364,187,264,133"/>
+<area shape="rect" id="Node000004" href="$class_graphe_interference.html" title="Classe qui gère le graphe d&#39;interférences entre véhicules." alt="" coords="91,5,223,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="177,42,220,95,215,96,176,47"/>
+<area shape="rect" id="Node000005" href="$class_graphe_routier.html" title="Classe représentant le graphe de toutes les routes présentantes et disponible actuelle dans la zone d..." alt="" coords="247,5,352,32"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="282,42,240,97,236,94,278,46"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="255,227,255,278,251,275,251,231"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="402,96,475,123"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="422,133,388,165,356,177,312,189,311,183,354,172,385,160,417,136"/>
+<area shape="rect" id="Node000008" href="$class_tool_bar.html" title="Classe représentant la barre des outils pour la simulation." alt="" coords="466,187,531,213"/>
+<area shape="poly" id="edge9_Node000008_Node000007" title=" " alt="" coords="457,133,493,187,487,185,455,138"/>
+<area shape="poly" id="edge11_Node000009_Node000007" title=" " alt="" coords="433,136,422,164,403,188,400,184,418,161,429,140"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="481,224,464,243,444,256,408,270,371,280,302,290,302,285,370,275,407,265,441,251,460,238,476,226"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="368,223,331,256,285,279,284,274,328,251,363,225"/>
+</map>

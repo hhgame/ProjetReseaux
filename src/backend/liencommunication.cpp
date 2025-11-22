@@ -27,8 +27,10 @@ double LienCommunication::getDistance() const
 
 bool LienCommunication::estEgale(const LienCommunication& autre) const
 {
-    return (((vehiculeA.lat == autre.vehiculeA.lat && vehiculeA.lon == autre.vehiculeA.lon) && (vehiculeB.lat == autre.vehiculeB.lat && vehiculeB.lon == autre.vehiculeB.lon) ||
-            ((vehiculeA.lat == autre.vehiculeB.lat && vehiculeA.lon == autre.vehiculeB.lon) && (vehiculeB.lat == autre.vehiculeA.lat && vehiculeB.lon == autre.vehiculeA.lon))));
+    return (((vehiculeA.lat == autre.vehiculeA.lat && vehiculeA.lon == autre.vehiculeA.lon)
+                 && (vehiculeB.lat == autre.vehiculeB.lat && vehiculeB.lon == autre.vehiculeB.lon) ||
+            ((vehiculeA.lat == autre.vehiculeB.lat && vehiculeA.lon == autre.vehiculeB.lon)
+                 && (vehiculeB.lat == autre.vehiculeA.lat && vehiculeB.lon == autre.vehiculeA.lon))));
 }
 
 void LienCommunication::afficherInfos() const

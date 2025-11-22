@@ -1,0 +1,9 @@
+<map id="MapWidgetOSM::wheelEvent" name="MapWidgetOSM::wheelEvent">
+<area shape="rect" id="Node000001" title="Gestion du zoom avec la molette." alt="" coords="5,35,199,61"/>
+<area shape="rect" id="Node000002" href="$class_map_widget_o_s_m.html#a119a5cdd4c1e1fb206152db2d266531f" title="Contrainte le centre pour rester sur le bassin mulhousien." alt="" coords="247,5,464,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="199,34,234,32,228,34,200,39"/>
+<area shape="rect" id="Node000003" href="$class_map_widget_o_s_m.html#a603a3bebdb5f31800ce9de13c8b3ae96" title="Calcule la latitude et la longitude correspondantes sur la carte." alt="" coords="260,56,450,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="199,57,247,64,242,65,199,62"/>
+<area shape="rect" id="Node000004" href="$class_map_widget_o_s_m.html#af492a05e52146495334f1d8128d78ec4" title="Convertit une coordonnée lat/lon en coordonnées de tuile." alt="" coords="512,64,725,91"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="451,75,499,77,494,77,451,80"/>
+</map>

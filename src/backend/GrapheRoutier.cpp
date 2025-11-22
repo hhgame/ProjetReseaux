@@ -46,7 +46,7 @@ void GrapheRoutier::ajouterArete(const Arete& a) {
 Noeud* GrapheRoutier::getNoeudParId(long id) const {
     auto it = noeuds.find(id);
     if (it != noeuds.end())
-        return const_cast<Noeud*>(&it->second); // pointeur non-const si tu veux modifier le noeud
+        return const_cast<Noeud*>(&it->second);
     return nullptr;
 }
 
@@ -84,10 +84,10 @@ bool GrapheRoutier::chargerDepuisOSM(const std::string& cheminFichier)
     QXmlStreamReader xml(&file);
 
     std::unordered_map<long, Noeud> noeudsTmp; // tous les nœuds valides dans la zone
-    std::unordered_set<long> noeudsUtilises;   // nœuds effectivement reliés à une route
+    std::unordered_set<long> noeudsUtilises;   // noeuds effectivement reliés à une route
     std::vector<Arete> aretesTmp;              // stocker temporairement les arêtes
 
-    // 1️⃣ Lire tous les nœuds
+    // Lire tous les noeuds
     while (!xml.atEnd() && !xml.hasError()) {
         xml.readNext();
         if (xml.isStartElement() && xml.name() == "node") {
@@ -106,7 +106,7 @@ bool GrapheRoutier::chargerDepuisOSM(const std::string& cheminFichier)
     xml.clear();
     xml.setDevice(&file);
 
-    // 2️⃣ Lire les ways et stocker les arêtes
+    // Lire les ways et stocker les arêtes
     while (!xml.atEnd() && !xml.hasError()) {
         xml.readNext();
         if (xml.isStartElement() && xml.name() == "way") {
@@ -151,14 +151,14 @@ bool GrapheRoutier::chargerDepuisOSM(const std::string& cheminFichier)
         }
     }
 
-    // 3️⃣ Ajouter les nœuds utilisés dans le graphe
+    // Ajouter les nœuds utilisés dans le graphe
     for (long id : noeudsUtilises) {
         ajouterNoeud(noeudsTmp.at(id));
     }
 
-    // 4️⃣ Ajouter les arêtes et lier aux nœuds
+    // Ajouter les arêtes et lier aux nœuds
     for (const Arete& a : aretesTmp) {
-        ajouterArete(a); // ajouterArete mettra à jour aretesSuiv des nœuds
+        ajouterArete(a);
     }
 
     if (xml.hasError()) {
@@ -168,8 +168,6 @@ bool GrapheRoutier::chargerDepuisOSM(const std::string& cheminFichier)
 
     file.close();
 
-    afficherResume();
-    std::cout << "✅ " << noeudsUtilises.size() << " nœuds routiers chargés (isolés exclus)." << std::endl;
     return true;
 }
 

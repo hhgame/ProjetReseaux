@@ -1,0 +1,5 @@
+<map id="MainWindow::setupUI" name="MainWindow::setupUI">
+<area shape="rect" id="Node000001" title="Mise en place des composants dans la fenêtre principale." alt="" coords="233,5,383,32"/>
+<area shape="rect" id="Node000002" href="$class_main_window.html#ae0f689c0c008299bf9447f6a70303e8b" title="Constructeur de la fenêtre principale." alt="" coords="5,5,185,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="214,19,185,21,185,16,220,19"/>
+</map>
