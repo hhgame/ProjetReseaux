@@ -1,0 +1,16 @@
+<map id="Noeud::getLatitude" name="Noeud::getLatitude">
+<area shape="rect" id="Node000001" title="Récupération de la composante latitude de la position de noeud." alt="" coords="539,127,670,153"/>
+<area shape="rect" id="Node000002" href="$class_simulateur.html#afa7051bcc230f9443e35c1880efc1c18" title="Ajout des nbVehicules véhicules aléatoirement sur le graphe routier." alt="" coords="293,60,479,103"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="535,122,468,106,468,101,540,122"/>
+<area shape="rect" id="Node000005" href="$class_vehicule.html#acd67759a83e2b63a8d9dd909cef6b103" title="Faire avancer le véhicule sur la graphe routier." alt="" coords="26,127,212,153"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="523,143,213,143,213,137,525,137"/>
+<area shape="rect" id="Node000006" href="$class_graphe_routier.html#a2df1ad397ade0e745553b8701d4d6a2c" title="Calcul de la distance entre deux noeuds." alt="" coords="281,177,491,204"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="532,157,447,179,446,174,526,158"/>
+<area shape="rect" id="Node000003" href="$class_simulateur.html#a9f626c706fd265e947d3607f8954f8f1" title="Misa à jour du nombre de véhicules." alt="" coords="29,5,209,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="275,60,209,48,209,42,280,58"/>
+<area shape="rect" id="Node000004" href="$class_simulateur.html#ab3307d63f3495178bd2e6cd28097c29a" title="Constructeur par défaut." alt="" coords="42,72,196,99"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="274,84,197,87,196,82,279,82"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="294,175,193,157,193,151,300,173"/>
+<area shape="rect" id="Node000007" href="$class_graphe_routier.html#a90f00ea59fb290b3828555333a33d248" title="Chargement du graphe routier depuis un fichier xml format OpenStreetMap." alt="" coords="5,177,233,204"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="262,191,233,193,233,188,267,191"/>
+</map>

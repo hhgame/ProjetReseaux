@@ -1,0 +1,5 @@
+<map id="LienCommunication::estEgale" name="LienCommunication::estEgale">
+<area shape="rect" id="Node000001" title="Vérifie si deux liens sont équivalents Deux liens sont considérés égaux si les mêmes véhicules sont c..." alt="" coords="5,5,150,48"/>
+<area shape="rect" id="Node000002" href="$class_lien_communication.html#a42bb1095521452d57ff379d2c0f8e2a0" title="Constructeur par défaut Initialise les IDs à &#45;1 (Aucune voiture ne peux avoir un id null) et la dista..." alt="" coords="198,5,342,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="150,24,185,26,180,27,150,29"/>
+</map>

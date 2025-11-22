@@ -1,0 +1,5 @@
+<map id="LienCommunication" name="LienCommunication">
+<area shape="rect" id="Node000001" title="Représente une connexion entre deux véhicules." alt="" coords="5,112,142,139"/>
+<area shape="rect" id="Node000002" href="$structvehicule_opti.html" title="Structure permettant d&#39;optimiser les structures renvoyées en représentant la position d&#39;un véhicule." alt="" coords="27,5,120,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="76,46,76,112,71,111,71,49"/>
+</map>

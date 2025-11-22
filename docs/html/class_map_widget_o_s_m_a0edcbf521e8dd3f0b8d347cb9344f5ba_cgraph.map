@@ -1,0 +1,5 @@
+<map id="MapWidgetOSM::mouseMoveEvent" name="MapWidgetOSM::mouseMoveEvent">
+<area shape="rect" id="Node000001" title="Gestion du déplacement de la carte (pan)" alt="" coords="5,5,236,32"/>
+<area shape="rect" id="Node000002" href="$class_map_widget_o_s_m.html#a119a5cdd4c1e1fb206152db2d266531f" title="Contrainte le centre pour rester sur le bassin mulhousien." alt="" coords="284,5,501,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="236,16,271,19,265,19,236,21"/>
+</map>

@@ -1,0 +1,17 @@
+<map id="MapWidgetOSM::tileKey" name="MapWidgetOSM::tileKey">
+<area shape="rect" id="Node000001" title="Génère une clé unique pour une tuile." alt="" coords="772,80,938,106"/>
+<area shape="rect" id="Node000002" href="$class_map_widget_o_s_m.html#a0b4faed51b47d5dc48270d4cdc2ee168" title="Charge les tuiles autour du centre." alt="" coords="542,29,719,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="775,76,693,59,693,53,781,76"/>
+<area shape="rect" id="Node000006" href="$class_map_widget_o_s_m.html#a79b1b5f36f3b6c8c3b8520be21c3b295" title="Dessine la carte et les overlays." alt="" coords="537,80,724,106"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="754,93,725,96,725,90,759,93"/>
+<area shape="rect" id="Node000007" href="$class_map_widget_o_s_m.html#a7a154c6acb78421e47d75943ccae0961" title="Slot appelé lorsque le téléchargement d&#39;une tuile est terminé" alt="" coords="275,130,489,157"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="779,109,725,121,603,134,490,142,489,136,603,128,724,116,773,110"/>
+<area shape="rect" id="Node000003" href="$class_map_widget_o_s_m.html#a0262d5a020ba5719205d34e0bb5637c7" title="Constructeur du widget OSM." alt="" coords="5,80,227,106"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="556,25,497,17,426,10,350,9,275,19,236,32,199,48,139,81,137,77,196,43,234,27,274,14,350,4,426,5,498,12,562,25"/>
+<area shape="rect" id="Node000004" href="$class_map_widget_o_s_m.html#a9db808599be54b634a91001a283ed757" title="Définit le centre de la carte en latitude/longitude." alt="" coords="291,29,473,56"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="524,43,474,45,473,40,529,42"/>
+<area shape="rect" id="Node000005" href="$class_map_widget_o_s_m.html#aab79ff12e7e01768a33178002e79c347" title="Définit le niveau de zoom." alt="" coords="294,80,470,106"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="549,59,451,82,450,76,544,60"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="276,93,228,96,227,90,281,92"/>
+<area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="290,127,189,109,190,104,295,126"/>
+</map>

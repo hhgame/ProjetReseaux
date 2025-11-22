@@ -1,0 +1,9 @@
+<map id="MapWidgetOSM::constrainCenter" name="MapWidgetOSM::constrainCenter">
+<area shape="rect" id="Node000001" title="Contrainte le centre pour rester sur le bassin mulhousien." alt="" coords="284,56,501,83"/>
+<area shape="rect" id="Node000002" href="$class_map_widget_o_s_m.html#a0edcbf521e8dd3f0b8d347cb9344f5ba" title="Gestion du déplacement de la carte (pan)" alt="" coords="5,5,236,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="299,54,196,35,196,30,304,52"/>
+<area shape="rect" id="Node000003" href="$class_map_widget_o_s_m.html#a9db808599be54b634a91001a283ed757" title="Définit le centre de la carte en latitude/longitude." alt="" coords="29,56,212,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="265,70,212,72,212,67,271,69"/>
+<area shape="rect" id="Node000004" href="$class_map_widget_o_s_m.html#a860f405264c7dbf97f59e3ecbfd1fb8d" title="Gestion du zoom avec la molette." alt="" coords="24,107,217,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="304,86,196,109,195,103,299,86"/>
+</map>

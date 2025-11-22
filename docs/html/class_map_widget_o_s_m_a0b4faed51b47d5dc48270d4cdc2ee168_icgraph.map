@@ -1,0 +1,10 @@
+<map id="MapWidgetOSM::loadTiles" name="MapWidgetOSM::loadTiles">
+<area shape="rect" id="Node000001" title="Charge les tuiles autour du centre." alt="" coords="505,23,682,49"/>
+<area shape="rect" id="Node000002" href="$class_map_widget_o_s_m.html#a0262d5a020ba5719205d34e0bb5637c7" title="Constructeur du widget OSM." alt="" coords="5,23,227,49"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="513,19,457,13,366,8,275,13,189,25,188,19,274,8,366,3,457,8,519,19"/>
+<area shape="rect" id="Node000003" href="$class_map_widget_o_s_m.html#a9db808599be54b634a91001a283ed757" title="Définit le centre de la carte en latitude/longitude." alt="" coords="275,23,457,49"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="487,36,458,39,457,33,492,36"/>
+<area shape="rect" id="Node000004" href="$class_map_widget_o_s_m.html#aab79ff12e7e01768a33178002e79c347" title="Définit le niveau de zoom." alt="" coords="278,73,454,100"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="518,53,430,75,429,70,513,54"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="279,70,185,53,186,47,284,69"/>
+</map>

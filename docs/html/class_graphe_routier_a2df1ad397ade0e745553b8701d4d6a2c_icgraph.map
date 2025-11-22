@@ -1,0 +1,7 @@
+<map id="GrapheRoutier::calculerDistance" name="GrapheRoutier::calculerDistance">
+<area shape="rect" id="Node000001" title="Calcul de la distance entre deux noeuds." alt="" coords="281,31,491,57"/>
+<area shape="rect" id="Node000002" href="$class_vehicule.html#acd67759a83e2b63a8d9dd909cef6b103" title="Faire avancer le véhicule sur la graphe routier." alt="" coords="26,5,212,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="263,33,212,30,212,25,268,32"/>
+<area shape="rect" id="Node000003" href="$class_graphe_routier.html#a90f00ea59fb290b3828555333a33d248" title="Chargement du graphe routier depuis un fichier xml format OpenStreetMap." alt="" coords="5,56,233,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="262,56,233,61,233,56,268,55"/>
+</map>

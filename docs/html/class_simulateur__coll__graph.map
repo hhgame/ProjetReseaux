@@ -1,0 +1,7 @@
+<map id="Simulateur" name="Simulateur">
+<area shape="rect" id="Node000001" title="Classe représentant le simulateur et les calculs du simulateur." alt="" coords="100,96,184,123"/>
+<area shape="rect" id="Node000002" href="$class_graphe_interference.html" title="Classe qui gère le graphe d&#39;interférences entre véhicules." alt="" coords="5,5,138,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,42,135,95,129,96,90,46"/>
+<area shape="rect" id="Node000003" href="$class_graphe_routier.html" title="Classe représentant le graphe de toutes les routes présentantes et disponible actuelle dans la zone d..." alt="" coords="162,5,267,32"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="197,43,154,97,151,93,192,45"/>
+</map>

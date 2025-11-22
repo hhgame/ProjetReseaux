@@ -1,0 +1,9 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,55,83"/>
+<area shape="rect" id="Node000002" href="$class_simulateur.html#ab3a471828de5c41352a6a88d5fb8862f" title="Affichage de l&#39;état de la simulation actuelle." alt="" coords="118,5,276,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="54,58,102,41,129,35,125,38,103,47,56,63"/>
+<area shape="rect" id="Node000003" href="$class_simulateur.html#a5d875d6a0e74b05ff6339f29e28377b2" title="Changement du pas de temps." alt="" coords="103,56,291,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="55,67,89,68,85,71,56,72"/>
+<area shape="rect" id="Node000004" href="$class_simulateur.html#a3e3a8ce95ffc2d294122a4b07bf7c259" title="Mise&#45;à&#45;jour des données de simulation à chaque tour." alt="" coords="132,107,262,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="55,76,103,92,130,102,124,102,102,97,55,81"/>
+</map>

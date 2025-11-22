@@ -1,0 +1,5 @@
+<map id="GrapheRoutier::getVoisins" name="GrapheRoutier::getVoisins">
+<area shape="rect" id="Node000001" title="Récupération des voisins du noeud d&#39;identifiant id." alt="" coords="240,5,413,32"/>
+<area shape="rect" id="Node000002" href="$class_vehicule.html#acd67759a83e2b63a8d9dd909cef6b103" title="Faire avancer le véhicule sur la graphe routier." alt="" coords="5,5,192,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="222,19,192,21,192,16,227,19"/>
+</map>

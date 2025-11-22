@@ -1,0 +1,7 @@
+<map id="Simulateur::ajouterVehiculesAleatoires" name="Simulateur::ajouterVehiculesAleatoires">
+<area shape="rect" id="Node000001" title="Ajout des nbVehicules véhicules aléatoirement sur le graphe routier." alt="" coords="233,35,419,77"/>
+<area shape="rect" id="Node000002" href="$class_simulateur.html#a9f626c706fd265e947d3607f8954f8f1" title="Misa à jour du nombre de véhicules." alt="" coords="5,5,185,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="215,43,185,41,185,35,220,42"/>
+<area shape="rect" id="Node000003" href="$class_simulateur.html#ab3307d63f3495178bd2e6cd28097c29a" title="Constructeur par défaut." alt="" coords="18,72,172,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="215,70,172,78,172,73,220,69"/>
+</map>

@@ -1,0 +1,14 @@
+<map id="MapWidgetOSM::paintEvent" name="MapWidgetOSM::paintEvent">
+<area shape="rect" id="Node000001" title="Dessine la carte et les overlays." alt="" coords="5,123,193,149"/>
+<area shape="rect" id="Node000002" href="$class_map_widget_o_s_m.html#ab5c98bee2a9b4480aeeac50d4e861118" title="Obtenir le QPixmap de chaque véhicule." alt="" coords="252,5,444,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,120,174,90,240,58,259,52,254,55,242,62,177,94,124,124"/>
+<area shape="rect" id="Node000003" href="$class_map_widget_o_s_m.html#af3846af8a074b4b6ed02b7be7527167b" title="Convertit une coordonnée lat/lon en position pixel sur le widget." alt="" coords="246,72,450,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="167,119,266,101,262,104,169,125"/>
+<area shape="rect" id="Node000004" href="$class_map_widget_o_s_m.html#af492a05e52146495334f1d8128d78ec4" title="Convertit une coordonnée lat/lon en coordonnées de tuile." alt="" coords="503,97,716,124"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="193,129,488,114,487,119,193,134"/>
+<area shape="rect" id="Node000005" href="$class_map_widget_o_s_m.html#aa8ace5ec1be3025e19937bd99f6af0b1" title="Donne le nombre de mètre par pixel." alt="" coords="241,173,455,200"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="168,147,266,169,261,171,168,153"/>
+<area shape="rect" id="Node000006" href="$class_map_widget_o_s_m.html#a72db733576e870e347b4765b8d0db95a" title="Génère une clé unique pour une tuile." alt="" coords="265,224,430,251"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="122,147,176,179,242,210,265,220,260,219,240,214,173,183,121,153"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="450,93,490,98,485,99,450,98"/>
+</map>

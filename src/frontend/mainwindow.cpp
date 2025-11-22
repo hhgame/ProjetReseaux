@@ -12,7 +12,6 @@ MainWindow::~MainWindow()
     delete s;
 }
 
-// Slots
 void MainWindow::ouvrirParametres()
 {
     if (paramWindow) {
@@ -27,7 +26,6 @@ void MainWindow::miseAJourVitesse(double facteur)
     if (s) s->setFacteurVitesse(facteur);
 }
 
-// Initialisation UI
 void MainWindow::setupUI()
 {
     QWidget* central = new QWidget(this);

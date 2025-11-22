@@ -1,8 +1,14 @@
 #ifndef LIENCOMMUNICATION_H
 #define LIENCOMMUNICATION_H
 
+/**
+ * Structure permettant d'optimiser les structures renvoyées
+ * en représentant la position d'un véhicule
+ */
 struct vehiculeOpti {
+    /** La latitude du vehicule */
     double lat;
+    /** La longitude du vehicule */
     double lon;
 };
 
@@ -12,13 +18,13 @@ struct vehiculeOpti {
 class LienCommunication
 {
 private:
-    // Id du premier véhicule
+    /** Id du premier véhicule */
     vehiculeOpti vehiculeA;
 
-    // Id du deuxième véhicule
+    /** Id du deuxième véhicule */
     vehiculeOpti vehiculeB;
 
-    // Distance entre les véhicules
+    /** Distance entre les véhicules */
     double distance;
 
 public:

@@ -1,0 +1,5 @@
+<map id="MapWidgetOSM::updateVehicules" name="MapWidgetOSM::updateVehicules">
+<area shape="rect" id="Node000001" title="Méthode de mise à jour des véhicules." alt="" coords="275,5,495,32"/>
+<area shape="rect" id="Node000002" href="$class_map_widget_o_s_m.html#a0262d5a020ba5719205d34e0bb5637c7" title="Constructeur du widget OSM." alt="" coords="5,5,227,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="256,19,227,21,227,16,262,19"/>
+</map>

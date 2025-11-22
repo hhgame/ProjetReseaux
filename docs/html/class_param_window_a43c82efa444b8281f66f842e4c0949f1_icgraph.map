@@ -1,0 +1,5 @@
+<map id="ParamWindow::onCancel" name="ParamWindow::onCancel">
+<area shape="rect" id="Node000001" title="Annulation de la saisie des paramètres." alt="" coords="253,5,422,32"/>
+<area shape="rect" id="Node000002" href="$class_param_window.html#a2ecfa70141f0a79cfc6246b87ab8e235" title="Constructeur de la fenêtre de paramétrage." alt="" coords="5,5,205,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="235,19,205,21,205,16,240,19"/>
+</map>

@@ -1,0 +1,13 @@
+<map id="Simulateur::mettreAJourNbVehicules" name="Simulateur::mettreAJourNbVehicules">
+<area shape="rect" id="Node000001" title="Misa à jour du nombre de véhicules." alt="" coords="5,73,185,116"/>
+<area shape="rect" id="Node000002" href="$class_simulateur.html#afa7051bcc230f9443e35c1880efc1c18" title="Ajout des nbVehicules véhicules aléatoirement sur le graphe routier." alt="" coords="233,73,419,116"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,92,220,94,215,95,186,97"/>
+<area shape="rect" id="Node000003" href="$class_simulateur.html#a739bd5a95954b7c0060868657b597c08" title="Vider le graphe des interférences." alt="" coords="467,5,697,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="382,70,466,41,499,35,494,37,468,47,383,75"/>
+<area shape="rect" id="Node000004" href="$class_noeud.html#a1cf0e5435ec0529515c9b509f3b71408" title="Récupération de la composante latitude de la position de noeud." alt="" coords="516,56,648,83"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="419,83,503,77,498,78,420,88"/>
+<area shape="rect" id="Node000005" href="$class_noeud.html#a21fa0ef47babf1ed075441e8f5b49368" title="Récupération de la composante longitude de la position de noeud." alt="" coords="512,107,653,133"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="419,101,499,111,493,112,420,107"/>
+<area shape="rect" id="Node000006" href="$class_simulateur.html#af9dba8447c09f2807e24b608e14b6f70" title="Recalculer le graphe des interférences." alt="" coords="488,157,677,200"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="385,114,468,143,492,153,486,152,466,148,385,119"/>
+</map>

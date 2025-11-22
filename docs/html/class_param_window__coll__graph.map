@@ -1,0 +1,11 @@
+<map id="ParamWindow" name="ParamWindow">
+<area shape="rect" id="Node000001" title="Classe représentant la fenêtre des paramètres de simulation." alt="" coords="25,187,131,213"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="6,96,78,123"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="55,135,76,186,70,186,51,139"/>
+<area shape="rect" id="Node000003" href="$class_simulateur.html" title="Classe représentant le simulateur et les calculs du simulateur." alt="" coords="102,96,185,123"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="128,135,89,188,86,184,123,136"/>
+<area shape="rect" id="Node000004" href="$class_graphe_interference.html" title="Classe qui gère le graphe d&#39;interférences entre véhicules." alt="" coords="5,5,138,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="92,42,136,95,131,96,91,47"/>
+<area shape="rect" id="Node000005" href="$class_graphe_routier.html" title="Classe représentant le graphe de toutes les routes présentantes et disponible actuelle dans la zone d..." alt="" coords="162,5,267,32"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="197,42,156,97,152,94,193,46"/>
+</map>

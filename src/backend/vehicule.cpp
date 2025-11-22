@@ -59,29 +59,12 @@ void Vehicule::setDirection(double dir)
     direction = dir;
 }
 
-void Vehicule::avancer(double dt) {
-    double rad = direction * M_PI / 180.0;
-    x += vitesse * std::cos(rad) * dt;
-    y += vitesse * std::sin(rad) * dt;
-
-    // Corriger les petites erreurs flottantes
-    const double epsilon = 1e-10; // seuil
-    if (std::abs(x) < epsilon) x = 0.0;
-    if (std::abs(y) < epsilon) y = 0.0;
-}
-
 void Vehicule::afficherEtat() const {
     std::cout << "Vehicule " << id
               << " | Position: (" << x << ", " << y << ")"
               << " | Vitesse: " << vitesse
               << " | Direction: " << direction << " degres"
               << std::endl;
-}
-
-
-void Vehicule::placerAuNoeud(const Noeud& n) {
-    x = n.getLatitude();
-    y = n.getLongitude();
 }
 
 void Vehicule::setNoeudDepart(long id) {
@@ -91,15 +74,18 @@ void Vehicule::setNoeudDepart(long id) {
     dernierNoeudId = -1; // départ sans précédent
 }
 
+void Vehicule::setRayonTransmission(int r) {
+    rayonTransmission = r;
+}
 
 void Vehicule::avancerSurGraphe(double dt, const GrapheRoutier& graphe) {
     const double EPS = 1e-6;
 
-    // 1️⃣ Nœud source
+    // Noeud source
     const Noeud* src = graphe.getNoeudParId(noeudActuelId);
     if (!src) return;
 
-    // 2️⃣ Choisir une destination si nécessaire
+    // Choisir une destination si nécessaire
     if (noeudDestinationId == -1) {
         const auto& voisins = graphe.getVoisins(noeudActuelId);
         if (voisins.empty()) return;
@@ -111,7 +97,7 @@ void Vehicule::avancerSurGraphe(double dt, const GrapheRoutier& graphe) {
             if (v != dernierNoeudId) candidats.push_back(v);
         }
 
-        // S'il n'y a aucun autre choix → obligé de retourner en arrière
+        // S'il n'y a aucun autre choix: obligé de retourner en arrière
         if (candidats.empty()) candidats = voisins;
 
         // Choisir un voisin aléatoire
@@ -119,11 +105,11 @@ void Vehicule::avancerSurGraphe(double dt, const GrapheRoutier& graphe) {
     }
 
 
-    // 3️⃣ Nœud destination
+    // Noeud destination
     const Noeud* dst = graphe.getNoeudParId(noeudDestinationId);
     if (!dst) return;
 
-    // 4️⃣ Distance sur l'arête
+    // Distance sur l'arête
     double dArete = graphe.calculerDistance(*src, *dst);
     if (dArete <= EPS) return;
 
@@ -136,7 +122,7 @@ void Vehicule::avancerSurGraphe(double dt, const GrapheRoutier& graphe) {
         x = src->getLatitude()  + (dst->getLatitude()  - src->getLatitude())  * positionSurArete;
         y = src->getLongitude() + (dst->getLongitude() - src->getLongitude()) * positionSurArete;
     } else {
-        // arrivée au nœud
+        // arrivée au noeud
         positionSurArete = 1.0;
         x = dst->getLatitude();
         y = dst->getLongitude();
@@ -148,7 +134,7 @@ void Vehicule::avancerSurGraphe(double dt, const GrapheRoutier& graphe) {
         positionSurArete = 0.0;
     }
 
-    // 5️⃣ Calcul direction seulement si on bouge
+    // Calcul direction seulement si on bouge
     double dx = dst->getLatitude()  - src->getLatitude();
     double dy = dst->getLongitude() - src->getLongitude();
     direction = std::atan2(dy, dx) * 180.0 / M_PI;

@@ -1,0 +1,5 @@
+<map id="MapWidgetOSM::latLonFromPixel" name="MapWidgetOSM::latLonFromPixel">
+<area shape="rect" id="Node000001" title="Calcule la latitude et la longitude correspondantes sur la carte." alt="" coords="247,5,437,48"/>
+<area shape="rect" id="Node000002" href="$class_map_widget_o_s_m.html#a860f405264c7dbf97f59e3ecbfd1fb8d" title="Gestion du zoom avec la molette." alt="" coords="5,13,199,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="228,27,199,29,199,24,234,26"/>
+</map>

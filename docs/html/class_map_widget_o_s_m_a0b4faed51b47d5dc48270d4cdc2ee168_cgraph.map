@@ -1,0 +1,7 @@
+<map id="MapWidgetOSM::loadTiles" name="MapWidgetOSM::loadTiles">
+<area shape="rect" id="Node000001" title="Charge les tuiles autour du centre." alt="" coords="5,31,183,57"/>
+<area shape="rect" id="Node000002" href="$class_map_widget_o_s_m.html#af492a05e52146495334f1d8128d78ec4" title="Convertit une coordonnée lat/lon en coordonnées de tuile." alt="" coords="231,5,444,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="183,32,218,31,213,32,184,37"/>
+<area shape="rect" id="Node000003" href="$class_map_widget_o_s_m.html#a72db733576e870e347b4765b8d0db95a" title="Génère une clé unique pour une tuile." alt="" coords="255,56,420,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="183,51,242,59,237,59,183,56"/>
+</map>
