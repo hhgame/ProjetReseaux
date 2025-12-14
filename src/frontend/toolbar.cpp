@@ -12,7 +12,7 @@ ToolBar::ToolBar(QWidget *parent)
     connect(speedSlider, &QSlider::valueChanged, this, &ToolBar::onSpeedSliderChanged);
 
     // Label affichant la valeur
-    speedLabel = new QLabel("Vitesse: 0.25x", this);
+    speedLabel = new QLabel("Vitesse: 1x", this);
 
     // Bouton paramètres
     paramButton = new QPushButton("Paramètres", this);
